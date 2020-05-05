@@ -2,5 +2,7 @@
     <string name="app_name">Transportivo</string>
     <string name="openNavDrawer">Open navigation drawer</string>
     <string name="closeNavDrawer">Close navigation drawer</string>
+    <string name="profile">Profile</string>
+
 
 </resources>
