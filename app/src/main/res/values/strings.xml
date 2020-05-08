@@ -3,6 +3,15 @@
     <string name="openNavDrawer">Open navigation drawer</string>
     <string name="closeNavDrawer">Close navigation drawer</string>
     <string name="profile">Profile</string>
+    <string name="description"> Description</string>
+    <string name="fromDestination">From destination</string>
+    <string name="toDestination">To destination</string>
+    <string name="arrivalTime">Arrival time</string>
+    <string name="departureTime">Departure time</string>
+    <string name="capacity">Capacity</string>
+    <string name="price">Price</string>
+
+
 
 
 </resources>

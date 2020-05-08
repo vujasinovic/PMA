@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/notificationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/subHead"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/notificationContext"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/notificationTitle"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="80dp"
+       android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+
+
+</RelativeLayout>
