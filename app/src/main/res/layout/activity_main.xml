@@ -8,9 +8,9 @@
     tools:context=".MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/mainActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mainActivity"
         android:background="@drawable/gradient">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -21,21 +21,19 @@
                 android:id="@+id/main_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/secondary_text_dark" />
+                android:background="@color/mainColor" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
         android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

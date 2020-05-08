@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -7,9 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
-
 
     <style name="FormTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="boxBackgroundColor">#FDA8C4C9</item>
@@ -23,9 +20,6 @@
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxStrokeColor">@color/white</item>
         <item name="hintTextColor">@color/white</item>
-
     </style>
-
-
 
 </resources>
