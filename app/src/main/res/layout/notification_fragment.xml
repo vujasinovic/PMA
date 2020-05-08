@@ -6,8 +6,7 @@
     android:layout_marginLeft="30dp"
     android:layout_marginTop="90dp"
     android:layout_marginRight="30dp"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,8 +19,7 @@
         android:id="@+id/notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B3ACCEE3">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:background="#B3ACCEE3"></androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

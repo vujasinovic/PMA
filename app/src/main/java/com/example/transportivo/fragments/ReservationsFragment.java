@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
@@ -39,21 +40,21 @@ public class ReservationsFragment extends Fragment {
         historyFragment = new HistoryFragment();
         offesFragment = new OffesFragment();
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        viewPager= (ViewPager) view.findViewById(R.id.viewPager);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
 
-        ViewAdapter viewAdapter = new ViewAdapter(getFragmentManager(),0);
-        viewAdapter.addFragment(offesFragment,"Offers");
-        viewAdapter.addFragment(activeReservationFragment,"Active");
-        viewAdapter.addFragment(historyFragment,"History");
+        ViewAdapter viewAdapter = new ViewAdapter(getFragmentManager(), 0);
+        viewAdapter.addFragment(offesFragment, "Offers");
+        viewAdapter.addFragment(activeReservationFragment, "Active");
+        viewAdapter.addFragment(historyFragment, "History");
         viewPager.setAdapter(viewAdapter);
 
 
         return view;
     }
 
-    private class ViewAdapter extends FragmentPagerAdapter{
+    private class ViewAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> fragments = new ArrayList<>();
         private List<String> fragmentTitles = new ArrayList<>();
@@ -73,7 +74,7 @@ public class ReservationsFragment extends Fragment {
             return fragments.size();
         }
 
-        public void addFragment(Fragment f, String title){
+        public void addFragment(Fragment f, String title) {
             fragments.add(f);
             fragmentTitles.add(title);
 
@@ -81,7 +82,7 @@ public class ReservationsFragment extends Fragment {
 
         @NonNull
         @Override
-        public CharSequence getPageTitle(int position){
+        public CharSequence getPageTitle(int position) {
             return fragmentTitles.get(position);
         }
 

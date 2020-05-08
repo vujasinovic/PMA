@@ -13,27 +13,28 @@ import com.example.transportivo.R;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
-    String [] data={};
+    String[] data = {};
 
     private LayoutInflater layoutInflater;
 
-    public NotificationAdapter(String[] strings){
+    public NotificationAdapter(String[] strings) {
         data = strings;
 
     }
+
     @NonNull
     @Override
     public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      layoutInflater = layoutInflater.from(parent.getContext());
-      View view = layoutInflater.inflate(R.layout.notification_list_item,parent,false);
+        layoutInflater = layoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.notification_list_item, parent, false);
         return new NotificationViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-    String title = data[position];
+        String title = data[position];
 
-    holder.notificationTitle.setText(title);
+        holder.notificationTitle.setText(title);
     }
 
     @Override
@@ -42,11 +43,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
 
-    public class NotificationViewHolder extends RecyclerView.ViewHolder{
+    public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
         ImageView image;
         TextView notificationTitle;
         TextView notificationContext;
+
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageIcon);

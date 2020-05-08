@@ -13,7 +13,7 @@
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
-        android:id="@+id/notificationTitle"
+        android:id="@+id/historyDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
@@ -24,13 +24,29 @@
 
     <TextView
 
-        android:id="@+id/notificationContext"
+        android:id="@+id/historyPrice"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/notificationTitle"
+        android:layout_height="70dp"
+        android:layout_below="@+id/historyDescription"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="10dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+        android:text="250 $." />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true">
+
+        <Button
+            android:id="@+id/rateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#C7CDCD"
+            android:text="Rate"
+            android:textColor="#0B0B0B"
+
+            />
+    </RelativeLayout>
 
 </RelativeLayout>

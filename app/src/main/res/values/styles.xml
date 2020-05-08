@@ -22,4 +22,10 @@
         <item name="hintTextColor">@color/white</item>
     </style>
 
+    <style name="ButtonList" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:background">#797272</item>
+        <item name="android:textColor">#0E0E0E</item>
+    </style>
+
 </resources>
