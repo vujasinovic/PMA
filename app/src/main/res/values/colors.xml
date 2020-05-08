@@ -2,6 +2,10 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="ButtonColor">#0A2AE1</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="mainColor">#3d9cab</color>
+    <color name="white">#ffff</color>
+    <color name="subHead">#252525</color>
+    <color name="colorText">#797979</color>
 </resources>
