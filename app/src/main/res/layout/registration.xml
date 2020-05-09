@@ -90,12 +90,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
+            style="@style/FormTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/FormTheme"
+            android:layout_marginTop="610dp"
             android:text="Transporter?"
-            android:textColor="#383535"
-            android:layout_marginTop="610dp"/>
+            android:textColor="#383535" />
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/FormTheme"
