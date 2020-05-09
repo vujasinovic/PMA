@@ -20,13 +20,13 @@ public class NotificationFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private String [] strings = {"Reservation", "Comment", "Rating"};
+    private String[] strings = {"Reservation", "Comment", "Rating"};
 
 
-    private  View view;
+    private View view;
 
-    public static NotificationFragment newInstance(){
-        return  new NotificationFragment();
+    public static NotificationFragment newInstance() {
+        return new NotificationFragment();
     }
 
     @Nullable
@@ -41,7 +41,6 @@ public class NotificationFragment extends Fragment {
         recyclerView.addItemDecoration(itemDecor);
         adapter = new NotificationAdapter(strings);
         recyclerView.setAdapter(adapter);
-
 
 
         return view;
