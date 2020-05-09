@@ -12,19 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
-import com.example.transportivo.adapters.NotificationAdapter;
 import com.example.transportivo.adapters.OffersAdapter;
 
-public class OffesFragment extends Fragment {
+public class OfferFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private String[] strings = {"5 tons of sugar", "5 tons of sugar", "3 tons of ..."};
 
-
     private View view;
-
 
     @Nullable
     @Override
@@ -38,7 +35,6 @@ public class OffesFragment extends Fragment {
         recyclerView.addItemDecoration(itemDecor);
         adapter = new OffersAdapter(strings);
         recyclerView.setAdapter(adapter);
-
 
         return view;
     }

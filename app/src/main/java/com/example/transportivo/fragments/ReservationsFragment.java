@@ -9,9 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.transportivo.R;
@@ -25,7 +23,7 @@ public class ReservationsFragment extends Fragment {
 
     private ActiveReservationFragment activeReservationFragment;
     private HistoryFragment historyFragment;
-    private OffesFragment offesFragment;
+    private OfferFragment offerFragment;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private View view;
@@ -38,14 +36,14 @@ public class ReservationsFragment extends Fragment {
 
         activeReservationFragment = new ActiveReservationFragment();
         historyFragment = new HistoryFragment();
-        offesFragment = new OffesFragment();
+        offerFragment = new OfferFragment();
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
 
         ViewAdapter viewAdapter = new ViewAdapter(getFragmentManager(), 0);
-        viewAdapter.addFragment(offesFragment, "Offers");
+        viewAdapter.addFragment(offerFragment, "Offers");
         viewAdapter.addFragment(activeReservationFragment, "Active");
         viewAdapter.addFragment(historyFragment, "History");
         viewPager.setAdapter(viewAdapter);
