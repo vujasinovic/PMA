@@ -10,15 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
+import com.example.transportivo.utils.FragmentHelper;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersViewHolder> {
-    String[] data = {};
+    private final String[] data;
+    private final View.OnClickListener onClickListener;
 
     private LayoutInflater layoutInflater;
 
-    public OffersAdapter(String[] strings) {
+    public OffersAdapter(String[] strings, View.OnClickListener onClickListener) {
         data = strings;
-
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -53,6 +55,9 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
             image = itemView.findViewById(R.id.imageIcon);
             offerDescription = itemView.findViewById(R.id.offerDescription);
             offerPrice = itemView.findViewById(R.id.offerPrice);
+
+            image.setOnClickListener(onClickListener);
+            offerDescription.setOnClickListener(onClickListener);
         }
     }
 }
