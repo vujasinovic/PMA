@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
 import com.example.transportivo.adapters.OffersAdapter;
+import com.example.transportivo.utils.FragmentHelper;
 
 public class OfferFragment extends Fragment {
 
@@ -21,19 +22,19 @@ public class OfferFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private String[] strings = {"5 tons of sugar", "5 tons of sugar", "3 tons of ..."};
 
-    private View view;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.offers_fragment, container, false);
+        final FragmentHelper fragmentHelper = new FragmentHelper(getFragmentManager());
+        final View view = inflater.inflate(R.layout.offers_fragment, container, false);
+
         recyclerView = view.findViewById(R.id.offers_res);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        adapter = new OffersAdapter(strings);
+        adapter = new OffersAdapter(strings, v -> fragmentHelper.switchToFragment(new OfferOverviewFragment()));
         recyclerView.setAdapter(adapter);
 
         return view;
