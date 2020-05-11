@@ -9,21 +9,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.transportivo.fragments.AddOfferFragment;
+import com.example.transportivo.fragments.HomePageFragment;
 import com.example.transportivo.fragments.NotificationFragment;
 import com.example.transportivo.fragments.ProfileFragment;
 import com.example.transportivo.fragments.ReservationsFragment;
+import com.example.transportivo.utils.FragmentHelper;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private FragmentHelper fragmentHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentHelper = new FragmentHelper(getSupportFragmentManager());
+
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
@@ -41,35 +47,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        fragmentHelper.switchToFragment(new HomePageFragment());
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainActivity,
-                        new ProfileFragment()).commit();
-                break;
-            case R.id.nav_add_offer:
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainActivity,
-                        new AddOfferFragment()).commit();
-                break;
-            case R.id.nav_reservations:
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainActivity,
-                        new ReservationsFragment()).commit();
-                break;
-
-            case R.id.nav_notifications:
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainActivity,
-                        new NotificationFragment().newInstance()).commit();
-                break;
-        }
+        fragmentHelper.switchToFragment(getFragmentForId(item.getItemId()));
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+    public Fragment getFragmentForId(int id) {
+        Fragment fragment;
 
+        switch (id) {
+            case R.id.nav_profile:
+                fragment = new ProfileFragment();
+                break;
+            case R.id.nav_add_offer:
+                fragment = new AddOfferFragment();
+                break;
+            case R.id.nav_reservations:
+                fragment = new ReservationsFragment();
+                break;
+            case R.id.nav_notifications:
+                fragment = NotificationFragment.newInstance();
+                break;
+            default:
+                throw new IllegalArgumentException("No Fragment For ID=" + id);
+        }
+
+        return fragment;
     }
+
 }
