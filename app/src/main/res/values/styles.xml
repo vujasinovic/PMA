@@ -9,9 +9,9 @@
     </style>
 
     <style name="FormTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="boxBackgroundColor">#FDA8C4C9</item>
+        <item name="boxBackgroundColor">@color/white</item>
         <item name="boxBackgroundMode">outline</item>
-        <item name="android:textColorHint">#797272</item>
+        <item name="android:textColorHint">#625D5D</item>
         <item name="android:layout_marginLeft">30dp</item>
         <item name="android:layout_marginRight">30dp</item>
         <item name="boxCornerRadiusTopEnd">12dp</item>

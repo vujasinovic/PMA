@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="57dp"
         android:background="@color/mainColor"
-        app:tabTextColor="@color/ButtonColor">
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="@android:color/black">
 
     </com.google.android.material.tabs.TabLayout>
 

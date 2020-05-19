@@ -8,4 +8,7 @@
     <color name="white">#ffff</color>
     <color name="subHead">#252525</color>
     <color name="colorText">#797979</color>
+    <color name="listView">#B3ACCEE3</color>
+    <color name="content">#686868</color>
+
 </resources>

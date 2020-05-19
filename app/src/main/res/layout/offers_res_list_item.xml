@@ -3,6 +3,11 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/list_shape"
+    android:backgroundTint="@color/white"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -31,7 +36,8 @@
         android:layout_below="@+id/offerDescription"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="10dp"
-        android:text="250 $" />
+        android:text="Price: 250 $"
+        android:textColor="@color/content" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -43,7 +49,8 @@
             android:id="@+id/acceptOfferButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_accept"
 
             />
@@ -52,8 +59,10 @@
             android:id="@+id/declineOfferButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/acceptOfferButton"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_close" />
 
     </RelativeLayout>

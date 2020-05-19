@@ -31,9 +31,6 @@ public class OfferFragment extends Fragment {
         recyclerView = view.findViewById(R.id.offers_res);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecor);
         adapter = new OffersAdapter(strings, v -> fragmentHelper.switchToFragment(new OfferOverviewFragment()));
         recyclerView.setAdapter(adapter);
 

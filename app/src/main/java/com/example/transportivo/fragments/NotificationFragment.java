@@ -37,8 +37,6 @@ public class NotificationFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecor);
         adapter = new NotificationAdapter(strings);
         recyclerView.setAdapter(adapter);
 

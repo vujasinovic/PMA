@@ -3,6 +3,12 @@
     android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/list_shape"
+    android:backgroundTint="@color/white"
+
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -31,21 +37,24 @@
         android:layout_below="@+id/offerActiveDescription"
         android:layout_marginLeft="75dp"
         android:layout_marginTop="10dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        android:textColor="@color/content" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true">
 
-        <Button
-            android:id="@+id/trackButton"
+        <ImageButton
+            android:id="@+id/acceptOfferButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#C7CDCD"
-            android:text="Track"
-            android:textColor="#0B0B0B" />
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_track_30"
+
+            />
     </RelativeLayout>
 
 

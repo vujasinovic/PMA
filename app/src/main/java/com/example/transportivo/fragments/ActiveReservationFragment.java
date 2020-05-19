@@ -34,8 +34,6 @@ public class ActiveReservationFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecor);
         adapter = new ActiveReservationAdapter(strings);
         recyclerView.setAdapter(adapter);
 

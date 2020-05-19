@@ -34,8 +34,7 @@ public class HistoryFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecor);
+
         adapter = new HistoryReservationAdapter(strings);
         recyclerView.setAdapter(adapter);
 
