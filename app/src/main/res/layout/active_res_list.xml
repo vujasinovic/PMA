@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="75dp"
         android:layout_marginTop="2dp"
-        android:textColor="@color/subHead"
+        android:textColor="@color/textPrimary"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -43,9 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#C7CDCD"
+            android:backgroundTint="@color/secondary"
             android:text="Track"
-            android:textColor="#0B0B0B" />
+            android:textColor="@color/textSecondary" />
     </RelativeLayout>
 
 

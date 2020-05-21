@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="230dp"
-    android:background="@color/mainColor"
+    android:layout_height="150dp"
+    android:background="@color/secondaryLight"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
@@ -18,12 +18,14 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Marko Markovic"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/textPrimary" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="marko123" />
+        android:text="marko123"
+        android:textColor="@color/textPrimary" />
 
 
 </LinearLayout>

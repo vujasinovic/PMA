@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp">
@@ -24,8 +23,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_profile"
-                android:backgroundTint="#C7CDCD"
-                android:textColor="#0D0D0D"
+                android:drawableTint="@color/textSecondary"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/textSecondary"
                 android:text="@string/profile_menu_item"
                 app:cornerRadius="7dp" />
 
@@ -35,8 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_notifications"
-                android:backgroundTint="#C7CDCD"
-                android:textColor="#0D0D0D"
+                android:drawableTint="@color/textSecondary"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/textSecondary"
                 android:text="@string/notifications_menu_item"
                 app:cornerRadius="7dp" />
 
@@ -52,8 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_reservations"
-                android:backgroundTint="#C7CDCD"
-                android:textColor="#0D0D0D"
+                android:drawableTint="@color/textSecondary"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/textSecondary"
                 android:text="@string/reservations_menu_item"
                 app:cornerRadius="7dp" />
 
@@ -63,8 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_add_offer"
-                android:backgroundTint="#C7CDCD"
-                android:textColor="#0D0D0D"
+                android:drawableTint="@color/textSecondary"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/textSecondary"
                 android:text="@string/add_offer_menu_item"
                 app:cornerRadius="7dp" />
 

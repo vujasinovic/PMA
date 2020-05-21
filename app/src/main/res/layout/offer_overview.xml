@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -14,13 +13,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/txtUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Transporter: Marko Kamiondžija" />
+            android:text="Transporter: Marko Kamiondžija"
+            android:textColor="@color/textPrimary"/>
 
         <View
             android:id="@+id/divider3"
@@ -32,13 +33,15 @@
             android:id="@+id/txtFrom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="From: Destination" />
+            android:text="From: Destination"
+            android:textColor="@color/textPrimary"/>
 
         <TextView
             android:id="@+id/txtTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="To: Destination" />
+            android:text="To: Destination"
+            android:textColor="@color/textPrimary"/>
 
         <View
             android:id="@+id/divider"
@@ -50,13 +53,15 @@
             android:id="@+id/txtDeparture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Departure at: 2020-02-02" />
+            android:text="Departure at: 2020-02-02"
+            android:textColor="@color/textPrimary"/>
 
         <TextView
             android:id="@+id/txtArrival"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Expected Arrival: 2020-02-03" />
+            android:text="Expected Arrival: 2020-02-03"
+            android:textColor="@color/textPrimary"/>
 
         <View
             android:id="@+id/divider2"
@@ -68,13 +73,15 @@
             android:id="@+id/txtCapacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Capacity: 15T" />
+            android:text="Capacity: 15T"
+            android:textColor="@color/textPrimary"/>
 
         <TextView
             android:id="@+id/txtPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Price: price" />
+            android:text="Price: price"
+            android:textColor="@color/textPrimary"/>
 
         <View
             android:id="@+id/divider4"
@@ -86,11 +93,14 @@
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description" />
+            android:text="Description"
+            android:textColor="@color/textPrimary"/>
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="387dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:progressTint="@color/goldenStar"
+            android:secondaryProgressTint="@color/goldenStarSecondary"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

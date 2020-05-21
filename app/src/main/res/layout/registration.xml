@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name"
@@ -95,16 +92,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="610dp"
             android:text="Transporter?"
-            android:textColor="#383535" />
+            android:textColor="@color/textPrimary" />
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/FormTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="695dp"
-            android:background="@color/ButtonColor"
+            android:background="@color/secondary"
             android:text="Register"
-            android:textColor="@color/white" />
+            android:textColor="@color/textSecondary" />
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
