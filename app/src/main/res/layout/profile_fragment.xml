@@ -69,7 +69,6 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="Last Name" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:endIconDrawable="@drawable/ic_date_range_black_24dp"
+                app:endIconTint="@color/secondary"
                 app:endIconMode="custom">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -91,14 +91,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-
-                style="@style/FormTheme"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@color/ButtonColor"
-                android:text="Save changes"
-                android:textColor="@color/white" />
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/secondary"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Save"
+                android:textColor="@color/textSecondary" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

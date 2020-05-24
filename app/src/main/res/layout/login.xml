@@ -36,15 +36,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
         android:text="Remember me"
-        android:textColor="#383535" />
+        android:textColor="@color/textPrimary" />
 
     <androidx.appcompat.widget.AppCompatButton
         style="@style/FormTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="255dp"
-        android:background="@color/ButtonColor"
+        android:background="@color/secondary"
         android:text="Login"
-        android:textColor="@color/white" />
+        android:textColor="@color/textSecondary" />
 
 </RelativeLayout>

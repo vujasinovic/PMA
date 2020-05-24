@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="ButtonColor">#0A2AE1</color>
-    <color name="colorAccent">#3d9cab</color>
-    <color name="mainColor">#3d9cab</color>
-    <color name="white">#ffff</color>
-    <color name="subHead">#252525</color>
-    <color name="colorText">#797979</color>
+    <color name="background">#D3D3D3</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="primary">#47c9a5</color>
+    <color name="primaryLight">#7ffdd6</color>
+    <color name="primaryDark">#009776</color>
+    <color name="textPrimary">#000000</color>
+
+    <color name="secondary">#0b7561</color>
+    <color name="secondaryLight">#4aa48e</color>
+    <color name="secondaryDark">#004837</color>
+    <color name="textSecondary">#ffffff</color>
+
+    <color name="goldenStar">#FDD835</color>
+    <color name="goldenStarSecondary">#44FDD835</color>
 </resources>

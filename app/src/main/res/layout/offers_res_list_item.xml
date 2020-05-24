@@ -19,16 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="2dp"
-        android:textColor="@color/subHead"
+        android:textColor="@color/textPrimary"
         android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
-
         android:id="@+id/offerPrice"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_below="@+id/offerDescription"
+        android:textColor="@color/textPrimary"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="10dp"
         android:text="250 $" />
@@ -45,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:src="@drawable/ic_accept"
-
+            android:tint="@color/textSecondary"
+            android:backgroundTint="@color/secondary"
             />
 
         <ImageButton
@@ -54,7 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/acceptOfferButton"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            android:tint="@color/textSecondary"
+            android:backgroundTint="@color/secondary"/>
 
     </RelativeLayout>
 </RelativeLayout>
