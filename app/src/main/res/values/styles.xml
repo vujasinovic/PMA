@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">#B8B8B8</item>
+        <item name="android:windowBackground">#FFEEEEEE</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/secondary</item>
@@ -21,6 +21,8 @@
         <item name="boxStrokeColor">@color/secondaryLight</item>
         <item name="hintTextColor">@color/secondary</item>
     </style>
+
+
 
     <style name="ButtonList" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:background">@color/secondary</item>

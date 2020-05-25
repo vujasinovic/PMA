@@ -3,35 +3,74 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="15dp"
-        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
-        android:id="@+id/offerDescription"
+        android:id="@+id/offerPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/textPrimary"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/labelPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/offerPlace"
+        android:layout_marginLeft="10dp"
+        android:text="Price:  "
+        android:textColor="@color/textPrimary" />
 
     <TextView
         android:id="@+id/offerPrice"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_below="@+id/offerDescription"
-        android:textColor="@color/textPrimary"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="10dp"
-        android:text="250 $" />
+        android:layout_below="@id/offerPlace"
+        android:layout_toRightOf="@+id/labelPrice"
+        android:text=" 250 $"
+        android:textColor="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/labelDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPrice"
+        android:layout_marginLeft="10dp"
+        android:text="Description:  "
+        android:textColor="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/offerDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_below="@id/labelPrice"
+        android:layout_toRightOf="@+id/labelDescription"
+        android:text="Transport for sugar"
+        android:textColor="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/labelCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelDescription"
+        android:layout_marginLeft="10dp"
+        android:text="Capacity:  "
+        android:textColor="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/offerCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_below="@id/labelDescription"
+        android:layout_toRightOf="@+id/labelCapacity"
+        android:text=" 5t"
+        android:textColor="@color/textPrimary" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -39,25 +78,15 @@
         android:layout_alignParentEnd="true"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/acceptOfferButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/ic_accept"
-            android:tint="@color/textSecondary"
-            android:backgroundTint="@color/secondary"
-            />
 
         <ImageButton
             android:id="@+id/declineOfferButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:layout_toRightOf="@+id/acceptOfferButton"
-            android:src="@drawable/ic_close"
-            android:tint="@color/textSecondary"
-            android:backgroundTint="@color/secondary"/>
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_more"
+            android:tint="@color/secondary" />
 
     </RelativeLayout>
 </RelativeLayout>
