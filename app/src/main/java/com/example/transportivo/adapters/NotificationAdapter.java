@@ -45,13 +45,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image;
         TextView notificationTitle;
         TextView notificationContext;
 
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageIcon);
             notificationTitle = itemView.findViewById(R.id.notificationTitle);
             notificationContext = itemView.findViewById(R.id.notificationContext);
         }

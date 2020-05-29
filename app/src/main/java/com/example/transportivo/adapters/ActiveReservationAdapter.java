@@ -34,7 +34,7 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
     public void onBindViewHolder(@NonNull ActiveReservationViewHolder holder, int position) {
         String title = data[position];
 
-        holder.offerDescription.setText(title);
+        holder.offerPlace.setText(title);
     }
 
     @Override
@@ -45,14 +45,12 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
 
     public class ActiveReservationViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image;
-        TextView offerDescription;
+        TextView offerPlace;
         TextView offerPrice;
 
         public ActiveReservationViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageIcon);
-            offerDescription = itemView.findViewById(R.id.offerActiveDescription);
+            offerPlace = itemView.findViewById(R.id.offerActivePlace);
             offerPrice = itemView.findViewById(R.id.offerActivePrice);
         }
     }

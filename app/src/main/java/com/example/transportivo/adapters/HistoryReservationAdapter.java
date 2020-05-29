@@ -34,7 +34,7 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
     public void onBindViewHolder(@NonNull HistoryReservationViewHolder holder, int position) {
         String title = data[position];
 
-        holder.offerDescription.setText(title);
+        holder.offerPlace.setText(title);
     }
 
     @Override
@@ -45,14 +45,12 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
 
     public class HistoryReservationViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image;
-        TextView offerDescription;
+        TextView offerPlace;
         TextView offerPrice;
 
         public HistoryReservationViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageIcon);
-            offerDescription = itemView.findViewById(R.id.historyDescription);
+            offerPlace = itemView.findViewById(R.id.historyPlace);
             offerPrice = itemView.findViewById(R.id.historyPrice);
         }
     }

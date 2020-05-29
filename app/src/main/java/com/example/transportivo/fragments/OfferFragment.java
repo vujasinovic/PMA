@@ -20,7 +20,7 @@ public class OfferFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private String[] strings = {"5 tons of sugar", "5 tons of sugar", "3 tons of ..."};
+    private String[] strings = {"Novi Sad 12:00 - Prnjavor 17:00", "Novi Sad 12:00 - Prijedor 19:00", "Novi Sad 12:00 - Prnjavor 17:00"};
 
     @Nullable
     @Override

@@ -35,7 +35,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
     public void onBindViewHolder(@NonNull OffersViewHolder holder, int position) {
         String title = data[position];
 
-        holder.offerDescription.setText(title);
+        holder.offerPlace.setText(title);
     }
 
     @Override
@@ -46,18 +46,16 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
 
     public class OffersViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image;
-        TextView offerDescription;
+
+        TextView offerPlace;
         TextView offerPrice;
 
         public OffersViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageIcon);
-            offerDescription = itemView.findViewById(R.id.offerDescription);
+            offerPlace = itemView.findViewById(R.id.offerPlace);
             offerPrice = itemView.findViewById(R.id.offerPrice);
 
-            image.setOnClickListener(onClickListener);
-            offerDescription.setOnClickListener(onClickListener);
+            offerPlace.setOnClickListener(onClickListener);
         }
     }
 }

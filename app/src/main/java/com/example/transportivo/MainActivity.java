@@ -62,15 +62,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_profile:
+                getSupportActionBar().setTitle("Profile");
                 fragment = new ProfileFragment();
                 break;
             case R.id.nav_add_offer:
+                getSupportActionBar().setTitle("Add offer");
                 fragment = new AddOfferFragment();
                 break;
             case R.id.nav_reservations:
+                getSupportActionBar().setTitle("Reservations");
                 fragment = new ReservationsFragment();
                 break;
             case R.id.nav_notifications:
+                getSupportActionBar().setTitle("Notification");
                 fragment = NotificationFragment.newInstance();
                 break;
             default:
