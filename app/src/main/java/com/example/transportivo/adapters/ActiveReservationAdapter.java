@@ -3,23 +3,22 @@ package com.example.transportivo.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
+import com.example.transportivo.model.Offer;
 
 public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReservationAdapter.ActiveReservationViewHolder> {
 
-    String[] data = {};
+    private Offer[] data;
 
     private LayoutInflater layoutInflater;
 
-    public ActiveReservationAdapter(String[] strings) {
-        data = strings;
-
+    public ActiveReservationAdapter(Offer[] offers) {
+        data = offers;
     }
 
     @NonNull
@@ -32,8 +31,8 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
 
     @Override
     public void onBindViewHolder(@NonNull ActiveReservationViewHolder holder, int position) {
-        String title = data[position];
-
+        Offer offer = data[position];
+        final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
         holder.offerPlace.setText(title);
     }
 

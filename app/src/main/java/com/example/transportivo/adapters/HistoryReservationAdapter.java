@@ -3,23 +3,22 @@ package com.example.transportivo.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
+import com.example.transportivo.model.Offer;
 
 public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReservationAdapter.HistoryReservationViewHolder> {
 
-    String[] data = {};
+    final Offer[] data;
 
     private LayoutInflater layoutInflater;
 
-    public HistoryReservationAdapter(String[] strings) {
+    public HistoryReservationAdapter(Offer[] strings) {
         data = strings;
-
     }
 
     @NonNull
@@ -32,7 +31,8 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
 
     @Override
     public void onBindViewHolder(@NonNull HistoryReservationViewHolder holder, int position) {
-        String title = data[position];
+        final Offer offer = data[position];
+        final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
 
         holder.offerPlace.setText(title);
     }
@@ -41,7 +41,6 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
     public int getItemCount() {
         return data.length;
     }
-
 
     public class HistoryReservationViewHolder extends RecyclerView.ViewHolder {
 

@@ -3,24 +3,25 @@ package com.example.transportivo.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
-import com.example.transportivo.utils.FragmentHelper;
+import com.example.transportivo.model.Offer;
+
+import java.util.function.Consumer;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersViewHolder> {
-    private final String[] data;
-    private final View.OnClickListener onClickListener;
+    private final Offer[] data;
+    private final Consumer<Offer> onOfferSelected;
 
     private LayoutInflater layoutInflater;
 
-    public OffersAdapter(String[] strings, View.OnClickListener onClickListener) {
-        data = strings;
-        this.onClickListener = onClickListener;
+    public OffersAdapter(Offer[] data, Consumer<Offer> onOfferSelected) {
+        this.data = data;
+        this.onOfferSelected = onOfferSelected;
     }
 
     @NonNull
@@ -33,7 +34,8 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
 
     @Override
     public void onBindViewHolder(@NonNull OffersViewHolder holder, int position) {
-        String title = data[position];
+        final Offer offer = data[position];
+        final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
 
         holder.offerPlace.setText(title);
     }
@@ -43,19 +45,18 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
         return data.length;
     }
 
-
     public class OffersViewHolder extends RecyclerView.ViewHolder {
-
-
-        TextView offerPlace;
-        TextView offerPrice;
+        final TextView offerPlace;
+        final TextView offerPrice;
 
         public OffersViewHolder(@NonNull View itemView) {
             super(itemView);
             offerPlace = itemView.findViewById(R.id.offerPlace);
             offerPrice = itemView.findViewById(R.id.offerPrice);
 
-            offerPlace.setOnClickListener(onClickListener);
+            offerPlace.setOnClickListener(v -> {
+                onOfferSelected.accept(data[getAdapterPosition()]);
+            });
         }
     }
 }

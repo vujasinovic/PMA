@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.transportivo.R;
-import com.example.transportivo.utils.FragmentHelper;
 
 public class OfferOverviewFragment extends Fragment {
 
@@ -18,6 +17,9 @@ public class OfferOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
+        System.out.println("Display: " + args.getOffer()); //TODO
+
         return inflater.inflate(R.layout.offer_overview, container, false);
     }
 
@@ -25,11 +27,13 @@ public class OfferOverviewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final FragmentHelper fragmentHelper = new FragmentHelper(getFragmentManager());
+        //TODO: switch to fragment
+/*
         final View.OnClickListener openMapOnClick =
                 v -> fragmentHelper.switchToFragment(new MapFragment());
+*/
 
-        view.findViewById(R.id.txtFrom).setOnClickListener(openMapOnClick);
-        view.findViewById(R.id.txtTo).setOnClickListener(openMapOnClick);
+//        view.findViewById(R.id.txtFrom).setOnClickListener(openMapOnClick);
+//        view.findViewById(R.id.txtTo).setOnClickListener(openMapOnClick);
     }
 }

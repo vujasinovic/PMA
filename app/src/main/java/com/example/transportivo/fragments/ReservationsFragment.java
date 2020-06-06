@@ -18,9 +18,9 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 public class ReservationsFragment extends Fragment {
-
-
     private ActiveReservationFragment activeReservationFragment;
     private HistoryFragment historyFragment;
     private OfferFragment offerFragment;
@@ -31,14 +31,17 @@ public class ReservationsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View response = nonNull(view) ? view : createView(inflater, container);
+        return response;
+    }
+
+    private View createView(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.reservations_fragment, container, false);
-
-
         activeReservationFragment = new ActiveReservationFragment();
         historyFragment = new HistoryFragment();
         offerFragment = new OfferFragment();
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabs);
+        viewPager = view.findViewById(R.id.viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -48,9 +51,9 @@ public class ReservationsFragment extends Fragment {
         viewAdapter.addFragment(historyFragment, "History");
         viewPager.setAdapter(viewAdapter);
 
-
         return view;
     }
+
 
     private class ViewAdapter extends FragmentStatePagerAdapter {
 

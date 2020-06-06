@@ -1,41 +1,56 @@
 package com.example.transportivo;
 
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.Menu;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.ui.AppBarConfiguration;
 
-import com.example.transportivo.fragments.AddOfferFragment;
-import com.example.transportivo.fragments.HomePageFragment;
-import com.example.transportivo.fragments.NotificationFragment;
-import com.example.transportivo.fragments.ProfileFragment;
-import com.example.transportivo.fragments.ReservationsFragment;
-import com.example.transportivo.utils.FragmentHelper;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private FragmentHelper fragmentHelper;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+
+import static androidx.navigation.Navigation.*;
+import static androidx.navigation.ui.NavigationUI.*;
+
+public class MainActivity extends AppCompatActivity {
+    private static final int[] navItems = {
+            R.id.nav_home,
+            R.id.nav_profile,
+            R.id.nav_add_offer,
+            R.id.nav_notifications,
+            R.id.nav_reservations,
+            R.id.nav_settings
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentHelper = new FragmentHelper(getSupportFragmentManager());
-
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
 
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
+        final NavController navController = findNavController(this, R.id.nav_host_fragment);
+
+        setSupportActionBar(toolbar);
+
+        setupToggle(toolbar, drawerLayout);
+        setupActionBarWithNavController(this, navController,
+                new AppBarConfiguration.Builder(new HashSet(Collections.singletonList(navItems)))
+                        .setDrawerLayout(drawerLayout)
+                        .build());
+        setupWithNavController(navigationView, navController);
+    }
+
+    private void setupToggle(Toolbar toolbar, DrawerLayout drawerLayout) {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -43,45 +58,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.openNavDrawer,
                 R.string.closeNavDrawer
         );
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-        fragmentHelper.switchToFragment(new HomePageFragment());
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        fragmentHelper.switchToFragment(getFragmentForId(item.getItemId()));
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return false;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return true;
     }
 
-    public Fragment getFragmentForId(int id) {
-        Fragment fragment;
-
-        switch (id) {
-            case R.id.nav_profile:
-                getSupportActionBar().setTitle("Profile");
-                fragment = new ProfileFragment();
-                break;
-            case R.id.nav_add_offer:
-                getSupportActionBar().setTitle("Add offer");
-                fragment = new AddOfferFragment();
-                break;
-            case R.id.nav_reservations:
-                getSupportActionBar().setTitle("Reservations");
-                fragment = new ReservationsFragment();
-                break;
-            case R.id.nav_notifications:
-                getSupportActionBar().setTitle("Notification");
-                fragment = NotificationFragment.newInstance();
-                break;
-            default:
-                throw new IllegalArgumentException("No Fragment For ID=" + id);
-        }
-
-        return fragment;
+    @Override
+    public boolean onSupportNavigateUp() {
+        final NavController navController = findNavController(this, R.id.nav_host_fragment);
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
 }
