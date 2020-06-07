@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -28,6 +29,19 @@ android {
 
 }
 
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.google.gms:google-services:4.3.3'
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -50,4 +64,6 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 }

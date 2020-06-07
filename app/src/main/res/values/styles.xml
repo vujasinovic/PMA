@@ -6,6 +6,12 @@
         <item name="colorAccent">@color/secondary</item>
     </style>
 
+    <style name="LoginTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/secondary</item>
+    </style>
+
     <style name="FormTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="boxBackgroundColor">#FFFFFF</item>
         <item name="boxBackgroundMode">outline</item>

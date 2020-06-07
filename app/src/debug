@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "967679497398",
+    "firebase_url": "https://ftn-pma.firebaseio.com",
+    "project_id": "ftn-pma",
+    "storage_bucket": "ftn-pma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967679497398:android:be45bb8a1647caea820217",
+        "android_client_info": {
+          "package_name": "com.example.transportivo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967679497398-qltbsqhbleohum619qe88ndecgeu6ns3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.transportivo",
+            "certificate_hash": "65fb0060b538f4c6379f50ec169f1263314bcb02"
+          }
+        },
+        {
+          "client_id": "967679497398-3t0oluthiuc0qc31ju916bmgi01cc91f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTdQm0KaR_EYPUdclU7zvoApl-2nuFjHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967679497398-3t0oluthiuc0qc31ju916bmgi01cc91f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
