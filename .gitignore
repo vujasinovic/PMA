@@ -24,5 +24,6 @@ com_crashlytics_export_strings.xml
 ehthumbs.db
 Thumbs.db
 
-
 .idea
+
+app/src/debug/google-services.json
