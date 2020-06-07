@@ -14,8 +14,8 @@ public class NotificationFragment extends BaseFragment {
     private RecyclerView.LayoutManager layoutManager;
     private String[] strings = {"Reservation", "Comment", "Rating"};
 
-    public NotificationFragment(int contentLayoutId) {
-        super(contentLayoutId);
+    public NotificationFragment() {
+        super(R.layout.notification_fragment);
     }
 
     @Override

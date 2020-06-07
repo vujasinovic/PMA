@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,10 +40,18 @@ public class ActiveReservationFragment extends Fragment {
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        adapter = new ActiveReservationAdapter(offers);
+        adapter = new ActiveReservationAdapter(offers, this::openOfferOverview);
         recyclerView.setAdapter(adapter);
 
 
         return view;
     }
+
+    private void openOfferOverview(Offer offer) {
+        final OfferOverviewFragmentArgs args = new OfferOverviewFragmentArgs.Builder(offer).build();
+        Navigation.findNavController(getView()).navigate(R.id.nav_offer_overview, args.toBundle());
+    }
+
+
+
 }

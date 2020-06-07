@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.transportivo.R;
 import com.example.transportivo.model.Offer;
 
+import java.util.function.Consumer;
+
 public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReservationAdapter.ActiveReservationViewHolder> {
 
     private Offer[] data;
-
+    private final Consumer<Offer> onOfferSelected;
     private LayoutInflater layoutInflater;
 
-    public ActiveReservationAdapter(Offer[] offers) {
+    public ActiveReservationAdapter(Offer[] offers, Consumer<Offer> onOfferSelected) {
         data = offers;
+        this.onOfferSelected = onOfferSelected;
     }
 
     @NonNull
@@ -51,6 +54,11 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
             super(itemView);
             offerPlace = itemView.findViewById(R.id.offerActivePlace);
             offerPrice = itemView.findViewById(R.id.offerActivePrice);
+
+            offerPlace.setOnClickListener(v -> {
+                onOfferSelected.accept(data[getAdapterPosition()]);
+            });
+
         }
     }
 }

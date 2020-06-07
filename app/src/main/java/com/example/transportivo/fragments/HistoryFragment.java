@@ -2,6 +2,7 @@ package com.example.transportivo.fragments;
 
 import android.view.View;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,10 +37,15 @@ public class HistoryFragment extends BaseFragment {
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        adapter = new HistoryReservationAdapter(offers);
+        adapter = new HistoryReservationAdapter(offers, this::openOfferOverview);
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    private void openOfferOverview(Offer offer) {
+        final OfferOverviewFragmentArgs args = new OfferOverviewFragmentArgs.Builder(offer).build();
+        Navigation.findNavController(getView()).navigate(R.id.nav_offer_overview, args.toBundle());
     }
 
 }

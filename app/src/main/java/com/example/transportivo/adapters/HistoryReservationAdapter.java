@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.transportivo.R;
 import com.example.transportivo.model.Offer;
 
+import java.util.function.Consumer;
+
 public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReservationAdapter.HistoryReservationViewHolder> {
 
     final Offer[] data;
-
+    final Consumer<Offer> onOfferSelected;
     private LayoutInflater layoutInflater;
 
-    public HistoryReservationAdapter(Offer[] strings) {
+    public HistoryReservationAdapter(Offer[] strings, Consumer<Offer> onOfferSelected) {
         data = strings;
+        this.onOfferSelected = onOfferSelected;
     }
 
     @NonNull
@@ -51,6 +54,10 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
             super(itemView);
             offerPlace = itemView.findViewById(R.id.historyPlace);
             offerPrice = itemView.findViewById(R.id.historyPrice);
+
+            offerPlace.setOnClickListener(v -> {
+                onOfferSelected.accept(data[getAdapterPosition()]);
+            });
         }
     }
 }
