@@ -1,77 +1,62 @@
 package com.example.transportivo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.ui.AppBarConfiguration;
 
-import com.google.android.material.navigation.NavigationView;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 
-import static androidx.navigation.Navigation.*;
-import static androidx.navigation.ui.NavigationUI.*;
+import static java.util.Objects.nonNull;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int[] navItems = {
-            R.id.nav_home,
-            R.id.nav_profile,
-            R.id.nav_add_offer,
-            R.id.nav_notifications,
-            R.id.nav_reservations,
-            R.id.nav_settings
-    };
+    private static final int RC_SIGN_IN = 123;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        final NavigationView navigationView = findViewById(R.id.nav_view);
-        final NavController navController = findNavController(this, R.id.nav_host_fragment);
+        if (isUserAuthenticated()) {
+            startTransportivoActivity();
+        } else {
+            List<AuthUI.IdpConfig> providers = Arrays.asList(
+                    new AuthUI.IdpConfig.EmailBuilder().build(),
+                    new AuthUI.IdpConfig.GoogleBuilder().build());
 
-        setSupportActionBar(toolbar);
-
-        setupToggle(toolbar, drawerLayout);
-        setupActionBarWithNavController(this, navController,
-                new AppBarConfiguration.Builder(new HashSet(Collections.singletonList(navItems)))
-                        .setDrawerLayout(drawerLayout)
-                        .build());
-        setupWithNavController(navigationView, navController);
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .setLogo(R.mipmap.ic_app_foreground)
+                            .setTheme(R.style.LoginTheme)
+                            .build(),
+                    RC_SIGN_IN);
+        }
     }
 
-    private void setupToggle(Toolbar toolbar, DrawerLayout drawerLayout) {
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.openNavDrawer,
-                R.string.closeNavDrawer
-        );
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+    private boolean isUserAuthenticated() {
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        boolean isUserAuthenticated = nonNull(firebaseAuth) && nonNull(firebaseAuth.getCurrentUser());
+        return isUserAuthenticated;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
-        return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
+            startTransportivoActivity();
+        }
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        final NavController navController = findNavController(this, R.id.nav_host_fragment);
-        return navController.navigateUp() || super.onSupportNavigateUp();
+    private void startTransportivoActivity() {
+        Intent intent = new Intent(this, TransportivoActivity.class);
+        startActivity(intent);
     }
 
 }

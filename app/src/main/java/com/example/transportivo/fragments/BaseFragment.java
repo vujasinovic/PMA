@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import static java.util.Objects.isNull;
+
 public abstract class BaseFragment extends Fragment {
     private final int layout;
     private View view;
@@ -21,12 +23,20 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = inflater.inflate(layout, container, false);
+        if (isNull(view)) {
+            view = inflater.inflate(layout, container, false);
+            view = initializeView(view);
+        }
+
         return view;
     }
+
+    protected View initializeView(View view) {
+        return view;
+    };
 
     @Nullable
     @Override
