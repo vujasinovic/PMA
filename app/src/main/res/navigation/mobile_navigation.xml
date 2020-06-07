@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.transportivo.fragments.HomePageFragment"
+        android:label="@string/home_menu_item"
+        tools:layout="@layout/home_fragment" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.transportivo.fragments.ProfileFragment"
+        android:label="@string/profile_menu_item"
+        tools:layout="@layout/profile_fragment" />
+
+    <fragment
+        android:id="@+id/nav_add_offer"
+        android:name="com.example.transportivo.fragments.AddOfferFragment"
+        android:label="@string/add_offer_menu_item"
+        tools:layout="@layout/add_offer_fragment" />
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.example.transportivo.fragments.NotificationFragment"
+        android:label="@string/notifications_menu_item"
+        tools:layout="@layout/notification_fragment" />
+
+    <fragment
+        android:id="@+id/nav_reservations"
+        android:name="com.example.transportivo.fragments.ReservationsFragment"
+        android:label="@string/reservations_menu_item"
+        tools:layout="@layout/reservations_fragment" />
+
+    <fragment
+        android:id="@+id/nav_offer_overview"
+        android:name="com.example.transportivo.fragments.OfferOverviewFragment">
+        <argument
+            android:name="offer"
+            app:argType="com.example.transportivo.model.Offer" />
+    </fragment>
+
+</navigation>

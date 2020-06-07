@@ -15,6 +15,7 @@
     <string name="notifications_menu_item">Notifications</string>
     <string name="reservations_menu_item">Reservations</string>
     <string name="settings_menu_item">Settings</string>
+    <string name="home_menu_item">Home</string>
     <string name="name">Name</string>
     <string name="lastName">Last name</string>
     <string name="phoneNumber">Phone number</string>
