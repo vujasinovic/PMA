@@ -20,8 +20,8 @@ public class HistoryFragment extends BaseFragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private final Offer[] offers = new Offer[]{
-            new Offer("Bilo", "Nekad", LocalDateTime.now().minusDays(1), LocalDateTime.now(), OfferStatus.OPEN),
-            new Offer("Vise", "Nije", LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(2).plusHours(2), OfferStatus.OPEN)
+            new Offer("Bilo", "Nekad", "foobar", LocalDateTime.now().minusDays(1).toString(), LocalDateTime.now().toString(), OfferStatus.COMPLETED),
+            new Offer("Vise", "Nije", "foobar", LocalDateTime.now().plusDays(2).toString(), LocalDateTime.now().plusDays(2).plusHours(2).toString(), OfferStatus.CANCELED)
     };
 
     public HistoryFragment() {

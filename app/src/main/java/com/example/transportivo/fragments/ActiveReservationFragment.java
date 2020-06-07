@@ -25,8 +25,8 @@ public class ActiveReservationFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private final Offer[] offers = new Offer[]{
-            new Offer("Foo", "Bar", LocalDateTime.now().minusDays(1), LocalDateTime.now(), OfferStatus.OPEN),
-            new Offer("Bar", "Foor", LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(2).plusHours(2), OfferStatus.OPEN)
+            new Offer("Foo", "Bar", "foo", LocalDateTime.now().minusDays(1).toString(), LocalDateTime.now().toString(), OfferStatus.IN_PROGRESS),
+            new Offer("Bar", "Foor", "bar", LocalDateTime.now().plusDays(2).toString(), LocalDateTime.now().plusDays(2).plusHours(2).toString(), OfferStatus.OPEN)
     };
 
     @Nullable

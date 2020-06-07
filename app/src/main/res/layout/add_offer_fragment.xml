@@ -19,6 +19,7 @@
             android:hint="@string/description">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -32,6 +33,7 @@
             android:hint="@string/fromDestination">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtLocationFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -46,6 +48,7 @@
             android:hint="@string/toDestination">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtLocationTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -149,6 +152,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddOffer"
             style="@style/FormTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
