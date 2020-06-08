@@ -37,6 +37,9 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
         Offer offer = data[position];
         final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
         holder.offerPlace.setText(title);
+        holder.offerPrice.setText(offer.getPrice());
+        holder.description.setText(offer.getDescription());
+        holder.capacity.setText(offer.getCapacity());
     }
 
     @Override
@@ -45,15 +48,18 @@ public class ActiveReservationAdapter extends RecyclerView.Adapter<ActiveReserva
     }
 
 
-    public class ActiveReservationViewHolder extends RecyclerView.ViewHolder {
-
+    class ActiveReservationViewHolder extends RecyclerView.ViewHolder {
         TextView offerPlace;
         TextView offerPrice;
+        TextView capacity;
+        TextView description;
 
-        public ActiveReservationViewHolder(@NonNull View itemView) {
+        ActiveReservationViewHolder(@NonNull View itemView) {
             super(itemView);
             offerPlace = itemView.findViewById(R.id.offerActivePlace);
             offerPrice = itemView.findViewById(R.id.offerActivePrice);
+            capacity = itemView.findViewById(R.id.offerActiveCapacity);
+            description = itemView.findViewById(R.id.offerActiveDescription);
 
             offerPlace.setOnClickListener(v -> {
                 onOfferSelected.accept(data[getAdapterPosition()]);

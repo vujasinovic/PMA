@@ -1,16 +1,9 @@
 package com.example.transportivo.fragments;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.ContentValues;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -26,7 +19,6 @@ import com.example.transportivo.provider.ReservationProvider;
 
 import java.util.Map;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 import static java.util.Objects.nonNull;
 
@@ -154,17 +146,17 @@ public class OfferOverviewFragment extends BaseFragment {
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
         ContentValues values = new ContentValues();
-        values.put(Reservation.Fields.rating,0);
-        values.put(Reservation.Fields.comment,"");
+        values.put(Reservation.Fields.rating, 0);
+        values.put(Reservation.Fields.comment, "");
 
-        values.put("offer_id", offer.getId().toString());
+        values.put("id", offer.getId().toString());
         getContext().getContentResolver().insert(ReservationProvider.CONTENT_URI, values);
 
         updateOffer(offer);
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
         NotificationCompat.Builder notification = notification();
 
-        notificationManagerCompat.notify(1,notification.build());
+        notificationManagerCompat.notify(1, notification.build());
 
     }
 
@@ -179,10 +171,10 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private boolean checkStatus(Offer offer) {
-        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS)? true : false;
+        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS) ? true : false;
     }
 
-    private NotificationCompat.Builder notification(){
+    private NotificationCompat.Builder notification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "CHANEL")
                 .setSmallIcon(R.drawable.ic_reservations)
                 .setContentTitle("Reservation")

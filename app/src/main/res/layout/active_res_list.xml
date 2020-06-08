@@ -32,7 +32,6 @@
         android:layout_height="70dp"
         android:layout_below="@id/offerActivePlace"
         android:layout_toRightOf="@+id/labelPrice"
-        android:text=" 250 $"
         android:textColor="@color/textPrimary" />
 
     <TextView
@@ -50,7 +49,6 @@
         android:layout_height="70dp"
         android:layout_below="@id/labelPrice"
         android:layout_toRightOf="@+id/labelDescription"
-        android:text="Transport for sugar"
         android:textColor="@color/textPrimary" />
 
     <TextView
@@ -68,7 +66,6 @@
         android:layout_height="70dp"
         android:layout_below="@id/labelDescription"
         android:layout_toRightOf="@+id/labelCapacity"
-        android:text=" 5t"
         android:textColor="@color/textPrimary" />
 
     <RelativeLayout

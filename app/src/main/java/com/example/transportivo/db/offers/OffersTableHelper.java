@@ -3,16 +3,14 @@ package com.example.transportivo.db.offers;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import static com.example.transportivo.model.Offer.Fields.capacity;
 import static com.example.transportivo.model.Offer.Fields.dateTimeArrival;
 import static com.example.transportivo.model.Offer.Fields.dateTimeDeparture;
+import static com.example.transportivo.model.Offer.Fields.description;
 import static com.example.transportivo.model.Offer.Fields.locationFrom;
 import static com.example.transportivo.model.Offer.Fields.locationTo;
 import static com.example.transportivo.model.Offer.Fields.offerStatus;
 import static com.example.transportivo.model.Offer.Fields.price;
-import static com.example.transportivo.model.Offer.Fields.capacity;
-
-
-
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OffersTableHelper {
@@ -22,9 +20,9 @@ public final class OffersTableHelper {
             + locationFrom + " TEXT, "
             + locationTo + " TEXT, "
             + offerStatus + " TEXT, "
+            + description + " TEXT, "
             + price + " TEXT, "
             + capacity + " TEXT, "
             + dateTimeArrival + " DATETIME, "
             + dateTimeDeparture + " DATETIME);";
-    public static final String DROP_TABLE = "DROP TABLE" + TABLE_NAME + ";";
 }

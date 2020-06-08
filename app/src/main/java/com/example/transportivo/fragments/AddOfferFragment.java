@@ -56,9 +56,7 @@ public class AddOfferFragment extends BaseFragment {
                 TransportivoTimePicker.showAndSet(activity, arrivalInput, true)
         );
 
-        btnAddOffer.setOnClickListener(o -> {
-            addOffer(view);
-        });
+        btnAddOffer.setOnClickListener(o -> addOffer(view));
 
         return view;
     }
@@ -73,7 +71,6 @@ public class AddOfferFragment extends BaseFragment {
         TextInputEditText capacityInput = view.findViewById(R.id.addCapacity);
         TextInputEditText priceInput = view.findViewById(R.id.addPrice);
 
-
         ContentValues values = new ContentValues();
         values.put(Offer.Fields.locationFrom, locationFrom.getText().toString());
         values.put(Offer.Fields.locationTo, locationTo.getText().toString());
@@ -82,9 +79,9 @@ public class AddOfferFragment extends BaseFragment {
         values.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
         values.put(Offer.Fields.price, priceInput.getText().toString());
         values.put(Offer.Fields.capacity, capacityInput.getText().toString());
+        values.put(Offer.Fields.description, description.getText().toString());
 
         Uri uri = getContext().getContentResolver().insert(OffersProvider.CONTENT_URI, values);
-        Toast.makeText(getContext(), uri.toString(), Toast.LENGTH_LONG).show();
 
         Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
     }

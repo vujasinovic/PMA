@@ -42,9 +42,9 @@ public class OffersProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-
         Context context = getContext();
         DbHelper dbHelper = new DbHelper(context);
+
         db = dbHelper.getWritableDatabase();
         return db != null;
     }
@@ -60,14 +60,13 @@ public class OffersProvider extends ContentProvider {
                 qb.setProjectionMap(OFFERS_PROJECTION_MAP);
                 break;
             case OFFERS_ID:
-                qb.appendWhere("id" + "=" + uri.getPathSegments().get(2));
+                qb.appendWhere("id" + "=" + uri.getPathSegments().get(OFFERS_ID));
                 break;
             default:
         }
 
-        Cursor c = qb.query(db, projection, selection,
+        return qb.query(db, projection, selection,
                 selectionArgs, null, null, sortOrder);
-        return c;
     }
 
     @Nullable
@@ -98,13 +97,13 @@ public class OffersProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        int row_update;
 
-        int row_update = 0;
-        row_update = db.update(OffersTableHelper.TABLE_NAME, values, "id=" + values.get("id"),
-                null);
+        row_update = db.update(OffersTableHelper.TABLE_NAME, values, "id=" + values.get("id"), null);
 
         ContentResolver contentResolver = Objects.requireNonNull(getContext()).getContentResolver();
         contentResolver.notifyChange(uri, null);
+
         return row_update;
     }
 }
