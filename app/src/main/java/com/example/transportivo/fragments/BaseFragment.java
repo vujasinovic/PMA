@@ -27,7 +27,11 @@ public abstract class BaseFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         if (isNull(view)) {
-            view = inflater.inflate(layout, container, false);
+            try {
+                view = inflater.inflate(layout, container, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             view = initializeView(view);
         }
 

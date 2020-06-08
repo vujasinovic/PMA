@@ -6,8 +6,8 @@
     <string name="description"> Description</string>
     <string name="fromDestination">From destination</string>
     <string name="toDestination">To destination</string>
-    <string name="arrivalTime">Arrival time</string>
-    <string name="departureTime">Departure time</string>
+    <string name="arrivalTime">Arrival</string>
+    <string name="departureTime">Departure</string>
     <string name="capacity">Capacity</string>
     <string name="price">Price</string>
     <string name="profile_menu_item">Profile</string>

@@ -1,6 +1,8 @@
 package com.example.transportivo.fragments;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 
 import com.example.transportivo.R;
+import com.example.transportivo.activity.PlacePickerActivity;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
 import com.example.transportivo.model.Reservation;
@@ -52,15 +55,28 @@ public class OfferOverviewFragment extends BaseFragment {
 
     private void setupDestinations(Offer offer) {
         final TextView txtFrom = getView().findViewById(R.id.txtFrom);
+        txtFrom.setOnClickListener(v -> {
+            displayOnMap(offer.getLocationFrom());
+        });
+
         final TextView txtTo = getView().findViewById(R.id.txtTo);
+        txtTo.setOnClickListener(v -> {
+            displayOnMap(offer.getLocationTo());
+        });
 
         txtFrom.setText(offer.getLocationFrom());
         txtTo.setText(offer.getLocationTo());
     }
 
+    private void displayOnMap(String address) {
+        Intent intent = new Intent(getContext(), PlacePickerActivity.class);
+        intent.setData(Uri.parse(address));
+        startActivityForResult(intent, 0);
+    }
+
     private void setupAmountAndPrice(Offer offer) {
         ContentValues values = new ContentValues();
-        final boolean accepted = checkStatus(offer);
+        final boolean accepted = false; //TODO: set to true if offer accepted (requires Offer modification)
         final View container = getView().findViewById(R.id.amountAndPrice);
         final TextView reservedAmount = getView().findViewById(R.id.reserverdAmount);
         final TextView price = getView().findViewById(R.id.price);
@@ -118,8 +134,6 @@ public class OfferOverviewFragment extends BaseFragment {
         } else if (status == OfferStatus.IN_PROGRESS) {
             buttonComplete.setVisibility(View.VISIBLE);
             buttonCancel.setVisibility(View.GONE);
-
-
         }
     }
 
