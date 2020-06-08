@@ -49,7 +49,6 @@ public class OfferOverviewFragment extends BaseFragment {
     protected View initializeView(View view) {
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
-        offer.setOfferStatus(OfferStatus.OPEN);
         setupStatusBar(offer);
         setupButtons(offer);
         setupDescription(offer);
@@ -134,10 +133,11 @@ public class OfferOverviewFragment extends BaseFragment {
 
     private void complete(View view) {
         //TODO:  rate, comment
+        final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
+        final Offer offer = args.getOffer();
         ContentValues values = new ContentValues();
         values.put(Offer.Fields.offerStatus, OfferStatus.COMPLETED.toString());
-        //TODO find id from offer
-        values.put("id", "1");
+        values.put("id", offer.getId().toString());
 
         getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
 
@@ -151,15 +151,16 @@ public class OfferOverviewFragment extends BaseFragment {
 
     private void acceptOffer(View view) {
 
+        final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
+        final Offer offer = args.getOffer();
         ContentValues values = new ContentValues();
         values.put(Reservation.Fields.rating,0);
         values.put(Reservation.Fields.comment,"");
 
-        //TODO find id from offer
-        values.put("offer_id", "1");
+        values.put("offer_id", offer.getId().toString());
         getContext().getContentResolver().insert(ReservationProvider.CONTENT_URI, values);
 
-        updateOffer();
+        updateOffer(offer);
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
         NotificationCompat.Builder notification = notification();
 
@@ -167,24 +168,18 @@ public class OfferOverviewFragment extends BaseFragment {
 
     }
 
-    private void updateOffer() {
+    private void updateOffer(Offer offer) {
         ContentValues values = new ContentValues();
         values.put(Offer.Fields.offerStatus, OfferStatus.IN_PROGRESS.toString());
-        //TODO find id from offer
-        values.put("id", "1");
+        values.put("id", offer.getId().toString());
 
         getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
-
         Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
 
     }
 
     private boolean checkStatus(Offer offer) {
-        if (offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS)) {
-            return true;
-        } else
-            return false;
-
+        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS)? true : false;
     }
 
     private NotificationCompat.Builder notification(){

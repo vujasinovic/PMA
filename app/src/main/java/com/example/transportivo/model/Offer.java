@@ -14,6 +14,7 @@ import lombok.experimental.FieldNameConstants;
 @AllArgsConstructor
 @FieldNameConstants
 public class Offer implements Serializable {
+    private Long id;
     private String locationFrom;
     private String locationTo;
     private String description;

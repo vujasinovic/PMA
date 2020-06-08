@@ -66,7 +66,7 @@ public class OfferFragment extends BaseFragment {
                 offer.setDateTimeDeparture(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeDeparture)));
                 offer.setLocationFrom(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationFrom)));
                 offer.setLocationTo(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationTo)));
-
+                offer.setId(cursor.getLong(cursor.getColumnIndex("id")));
                 String status = cursor.getString(cursor.getColumnIndex(Offer.Fields.offerStatus));
                 if (nonNull(status)) {
                     offer.setOfferStatus(OfferStatus.valueOf(status));
