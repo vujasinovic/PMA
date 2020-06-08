@@ -22,6 +22,9 @@
         <provider
             android:name=".provider.OffersProvider"
             android:authorities="com.example.transportivo.provider.OffersProvider" />
+        <provider
+            android:name=".provider.ReservationProvider"
+            android:authorities="com.example.transportivo.provider.ReservationProvider" />
     </application>
 
 </manifest>

@@ -17,25 +17,27 @@ import androidx.annotation.Nullable;
 
 import com.example.transportivo.db.DbHelper;
 import com.example.transportivo.db.offers.OffersTableHelper;
+import com.example.transportivo.db.reservation.ReservationTableHelper;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-public class OffersProvider extends ContentProvider {
-    static final String PROVIDER_NAME = "com.example.transportivo.provider.OffersProvider";
-    static final String URL = "content://" + PROVIDER_NAME + "/offers";
+public class ReservationProvider extends ContentProvider {
+
+
+    static final String PROVIDER_NAME = "com.example.transportivo.provider.ReservationProvider";
+    static final String URL = "content://" + PROVIDER_NAME + "/reservation";
     public static final Uri CONTENT_URI = Uri.parse(URL);
 
-    private static HashMap<String, String> OFFERS_PROJECTION_MAP;
-    static final int OFFERS = 1;
-    static final int OFFERS_ID = 2;
+    static final int RESERVATION = 1;
+    static final int RESERVATION_ID = 2;
 
     static final UriMatcher uriMatcher;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "offers", OFFERS);
-        uriMatcher.addURI(PROVIDER_NAME, "offers/#", OFFERS_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "reservation", RESERVATION);
+        uriMatcher.addURI(PROVIDER_NAME, "reservation/#", RESERVATION_ID);
     }
 
     private SQLiteDatabase db;
@@ -54,19 +56,9 @@ public class OffersProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         qb.setTables(OffersTableHelper.TABLE_NAME);
-
-        switch (uriMatcher.match(uri)) {
-            case OFFERS:
-                qb.setProjectionMap(OFFERS_PROJECTION_MAP);
-                break;
-            case OFFERS_ID:
-                qb.appendWhere("id" + "=" + uri.getPathSegments().get(OFFERS_ID));
-                break;
-            default:
-        }
-
-        return qb.query(db, projection, selection,
+        Cursor c = qb.query(db, projection, selection,
                 selectionArgs, null, null, sortOrder);
+        return c;
     }
 
     @Nullable
@@ -78,7 +70,7 @@ public class OffersProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        long id = db.insert(OffersTableHelper.TABLE_NAME, "", values);
+        long id = db.insert(ReservationTableHelper.TABLE_NAME, "", values);
 
         if (id > 0) {
             Uri uriWithId = ContentUris.withAppendedId(CONTENT_URI, id);
@@ -97,13 +89,6 @@ public class OffersProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        int row_update;
-
-        row_update = db.update(OffersTableHelper.TABLE_NAME, values, "id=" + values.get("id"), null);
-
-        ContentResolver contentResolver = Objects.requireNonNull(getContext()).getContentResolver();
-        contentResolver.notifyChange(uri, null);
-
-        return row_update;
+        return 0;
     }
 }

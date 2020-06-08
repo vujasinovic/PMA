@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -39,6 +40,7 @@ public class OfferFragment extends BaseFragment {
         recyclerView.addItemDecoration(itemDecor);
         Offer[] offers = retrieve();
         adapter = new OffersAdapter(offers, this::openOfferOverview);
+
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
@@ -62,11 +64,11 @@ public class OfferFragment extends BaseFragment {
         if (cursor.moveToFirst()) {
             do {
                 Offer offer = new Offer();
+                offer.setId(cursor.getLong(cursor.getColumnIndex("id")));
                 offer.setDateTimeArrival(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeArrival)));
                 offer.setDateTimeDeparture(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeDeparture)));
                 offer.setLocationFrom(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationFrom)));
                 offer.setLocationTo(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationTo)));
-
                 String status = cursor.getString(cursor.getColumnIndex(Offer.Fields.offerStatus));
                 if (nonNull(status)) {
                     offer.setOfferStatus(OfferStatus.valueOf(status));
