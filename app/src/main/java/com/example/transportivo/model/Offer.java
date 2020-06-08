@@ -1,5 +1,7 @@
 package com.example.transportivo.model;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
@@ -18,4 +20,6 @@ public class Offer implements Serializable {
     private String dateTimeDeparture;
     private String dateTimeArrival;
     private OfferStatus offerStatus;
+    private String price;
+    private String capacity;
 }

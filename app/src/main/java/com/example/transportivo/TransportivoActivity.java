@@ -1,6 +1,9 @@
 package com.example.transportivo;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +59,7 @@ public class TransportivoActivity extends AppCompatActivity {
                         .setDrawerLayout(drawerLayout)
                         .build());
         setupWithNavController(navigationView, navController);
+        createNotificationChannel();
     }
 
     private void initializeListeners(NavigationView navigationView) {
@@ -98,4 +102,16 @@ public class TransportivoActivity extends AppCompatActivity {
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANEL", "Reservayion", importance);
+            channel.setDescription("You have one offer");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }

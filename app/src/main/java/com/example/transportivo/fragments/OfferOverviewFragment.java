@@ -1,18 +1,32 @@
 package com.example.transportivo.fragments;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.ContentValues;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
 
 import com.example.transportivo.R;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
+import com.example.transportivo.model.Reservation;
+import com.example.transportivo.provider.OffersProvider;
+import com.example.transportivo.provider.ReservationProvider;
 
 import java.util.Map;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
 import static java.util.Objects.nonNull;
 
@@ -35,7 +49,7 @@ public class OfferOverviewFragment extends BaseFragment {
     protected View initializeView(View view) {
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
-
+        offer.setOfferStatus(OfferStatus.OPEN);
         setupStatusBar(offer);
         setupButtons(offer);
         setupDescription(offer);
@@ -54,14 +68,22 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private void setupAmountAndPrice(Offer offer) {
-        final boolean accepted = false; //TODO: set to true if offer accepted (requires Offer modification)
+        ContentValues values = new ContentValues();
+        final boolean accepted = checkStatus(offer);
         final View container = getView().findViewById(R.id.amountAndPrice);
         final TextView reservedAmount = getView().findViewById(R.id.reserverdAmount);
         final TextView price = getView().findViewById(R.id.price);
-
         container.setVisibility(accepted ? View.VISIBLE : View.GONE);
         price.setText("Price: 200$");
         reservedAmount.setText("Reserved 5T");
+        values.put(Offer.Fields.price, price.toString());
+        values.put(Offer.Fields.capacity, reservedAmount.toString());
+        //TODO find id from offer
+        values.put("id", "1");
+
+        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
+
+
     }
 
     private void setupDescription(Offer offer) {
@@ -78,7 +100,7 @@ public class OfferOverviewFragment extends BaseFragment {
         statusBar.setText(statusTextByOfferStatus.get(status));
 
         Integer colorResource = statusColorByOfferStatus.get(status);
-        if(nonNull(colorResource)) {
+        if (nonNull(colorResource)) {
             statusBar.setBackgroundColor(ContextCompat.getColor(getContext(), colorResource));
         }
     }
@@ -97,19 +119,30 @@ public class OfferOverviewFragment extends BaseFragment {
         buttonComplete.setOnClickListener(this::complete);
 
         final OfferStatus status = offer.getOfferStatus();
-        final boolean accepted = false; //TODO: set to true if offer accepted (requires Offer modification)
+        final boolean accepted = checkStatus(offer);
 
         if (status == OfferStatus.OPEN && !accepted) {
             buttonAccept.setVisibility(View.VISIBLE);
-        } else if (status == OfferStatus.OPEN && !accepted) {
             buttonCancel.setVisibility(View.VISIBLE);
         } else if (status == OfferStatus.IN_PROGRESS) {
             buttonComplete.setVisibility(View.VISIBLE);
+            buttonCancel.setVisibility(View.GONE);
+
+
         }
     }
 
     private void complete(View view) {
-        //TODO: Mark reservation as completed, rate, comment
+        //TODO:  rate, comment
+        ContentValues values = new ContentValues();
+        values.put(Offer.Fields.offerStatus, OfferStatus.COMPLETED.toString());
+        //TODO find id from offer
+        values.put("id", "1");
+
+        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
+
+        Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+
     }
 
     private void cancel(View view) {
@@ -117,7 +150,54 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private void acceptOffer(View view) {
-        //TODO: make reservation
+
+        ContentValues values = new ContentValues();
+        values.put(Reservation.Fields.rating,0);
+        values.put(Reservation.Fields.comment,"");
+
+        //TODO find id from offer
+        values.put("offer_id", "1");
+        getContext().getContentResolver().insert(ReservationProvider.CONTENT_URI, values);
+
+        updateOffer();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+        NotificationCompat.Builder notification = notification();
+
+        notificationManagerCompat.notify(1,notification.build());
+
     }
+
+    private void updateOffer() {
+        ContentValues values = new ContentValues();
+        values.put(Offer.Fields.offerStatus, OfferStatus.IN_PROGRESS.toString());
+        //TODO find id from offer
+        values.put("id", "1");
+
+        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
+
+        Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+
+    }
+
+    private boolean checkStatus(Offer offer) {
+        if (offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS)) {
+            return true;
+        } else
+            return false;
+
+    }
+
+    private NotificationCompat.Builder notification(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "CHANEL")
+                .setSmallIcon(R.drawable.ic_reservations)
+                .setContentTitle("Reservation")
+                .setContentText("You have one reservation by user jovanagrabez")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("You have one reservation by user jovanagrabez"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        return builder;
+    }
+
 
 }
