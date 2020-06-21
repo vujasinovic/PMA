@@ -1,13 +1,12 @@
 package com.example.transportivo.fragments;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.navigation.Navigation;
 
@@ -15,7 +14,7 @@ import com.example.transportivo.R;
 import com.example.transportivo.activity.PlacePickerActivity;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
-import com.example.transportivo.provider.OffersProvider;
+import com.example.transportivo.provider.FirebaseClient;
 import com.example.transportivo.ui.TransportivoDatePicker;
 import com.example.transportivo.ui.TransportivoTimePicker;
 import com.google.android.libraries.places.api.model.Place;
@@ -33,10 +32,10 @@ import static java.util.Objects.nonNull;
 public class AddOfferFragment extends BaseFragment {
     private static final int FROM_REQUEST_CODE = 1;
     private static final int TO_REQUEST_CODE = 2;
+    private static final String BASE_NAME = "AddOfferFragment";
 
     private TextInputEditText locationFrom;
     private TextInputEditText locationTo;
-
 
     public AddOfferFragment() {
         super(R.layout.add_offer_fragment);
@@ -109,7 +108,7 @@ public class AddOfferFragment extends BaseFragment {
         startActivityForResult(intent, requestCode);
     }
 
-    public void addOffer(View view) {
+    private void addOffer(View view) {
         TextInputEditText description = view.findViewById(R.id.txtDescription);
         TextInputEditText dateInput = view.findViewById(R.id.date);
         TextInputEditText departureInput = view.findViewById(R.id.departure);
@@ -117,17 +116,18 @@ public class AddOfferFragment extends BaseFragment {
         TextInputEditText capacityInput = view.findViewById(R.id.addCapacity);
         TextInputEditText priceInput = view.findViewById(R.id.addPrice);
 
-        ContentValues values = new ContentValues();
-        values.put(Offer.Fields.locationFrom, locationFrom.getText().toString());
-        values.put(Offer.Fields.locationTo, locationTo.getText().toString());
-        values.put(Offer.Fields.dateTimeArrival, dateInput.getText().toString() + " " + arrivalInput.getText());
-        values.put(Offer.Fields.dateTimeDeparture, dateInput.getText().toString() + " " + departureInput.getText());
-        values.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
-        values.put(Offer.Fields.price, priceInput.getText().toString());
-        values.put(Offer.Fields.capacity, capacityInput.getText().toString());
-        values.put(Offer.Fields.description, description.getText().toString());
+        Offer offer = new Offer();
+        offer.setDescription(description.getText().toString());
+        offer.setLocationTo(locationTo.getText().toString());
+        offer.setLocationFrom(locationFrom.getText().toString());
+        offer.setDateTimeArrival(dateInput.getText().toString() + " " + arrivalInput.getText());
+        offer.setDateTimeDeparture(dateInput.getText().toString() + " " + departureInput.getText());
+        offer.setOfferStatus(OfferStatus.OPEN);
+        offer.setPrice(priceInput.getText().toString());
+        offer.setCapacity(capacityInput.getText().toString());
 
-        Uri uri = getContext().getContentResolver().insert(OffersProvider.CONTENT_URI, values);
+        FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
+        firebaseClient.create(offer, o -> Log.i(BASE_NAME, "Successfully added new offer"));
 
         Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
     }
@@ -153,6 +153,4 @@ public class AddOfferFragment extends BaseFragment {
         locationFrom.clearFocus();
         locationTo.clearFocus();
     }
-
-
 }

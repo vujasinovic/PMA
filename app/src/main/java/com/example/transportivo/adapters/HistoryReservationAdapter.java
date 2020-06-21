@@ -45,12 +45,12 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
         return data.length;
     }
 
-    public class HistoryReservationViewHolder extends RecyclerView.ViewHolder {
+    class HistoryReservationViewHolder extends RecyclerView.ViewHolder {
 
         TextView offerPlace;
         TextView offerPrice;
 
-        public HistoryReservationViewHolder(@NonNull View itemView) {
+        HistoryReservationViewHolder(@NonNull View itemView) {
             super(itemView);
             offerPlace = itemView.findViewById(R.id.historyPlace);
             offerPrice = itemView.findViewById(R.id.historyPrice);

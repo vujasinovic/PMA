@@ -1,8 +1,5 @@
 package com.example.transportivo.fragments;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +16,10 @@ import com.example.transportivo.R;
 import com.example.transportivo.adapters.ActiveReservationAdapter;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
+import com.example.transportivo.provider.FirebaseClient;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Objects.nonNull;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActiveReservationFragment extends Fragment {
 
@@ -42,8 +37,14 @@ public class ActiveReservationFragment extends Fragment {
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        adapter = new ActiveReservationAdapter(retrieve(), this::openOfferOverview);
-        recyclerView.setAdapter(adapter);
+
+        FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
+
+        firebaseClient.getAll(Offer.class, buildQuery(), result -> {
+            adapter = new ActiveReservationAdapter(result, this::openOfferOverview);
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+        });
 
         return view;
     }
@@ -53,37 +54,11 @@ public class ActiveReservationFragment extends Fragment {
         Navigation.findNavController(getView()).navigate(R.id.nav_offer_overview, args.toBundle());
     }
 
-    private Offer[] retrieve() {
-        List<Offer> offerList = new ArrayList<>();
+    private Map<String, Object> buildQuery() {
+        Map<String, Object> query = new HashMap<>();
+        query.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
 
-        final String URL = "content://com.example.transportivo.provider.OffersProvider/offers";
-
-        Uri uri = Uri.parse(URL);
-        ContentResolver contentResolver = getContext().getContentResolver();
-        Cursor cursor = contentResolver.query(uri, null, Offer.Fields.offerStatus + "= ? " , new String[] {OfferStatus.IN_PROGRESS.toString()}, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Offer offer = new Offer();
-                offer.setId(cursor.getLong(cursor.getColumnIndex(Offer.Fields.id)));
-                offer.setDateTimeArrival(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeArrival)));
-                offer.setDateTimeDeparture(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeDeparture)));
-                offer.setLocationFrom(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationFrom)));
-                offer.setLocationTo(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationTo)));
-
-                String status = cursor.getString(cursor.getColumnIndex(Offer.Fields.offerStatus));
-                if (nonNull(status)) {
-                    offer.setOfferStatus(OfferStatus.valueOf(status));
-                }
-
-                offerList.add(offer);
-            } while (cursor.moveToNext());
-        }
-
-        Offer[] offers = new Offer[offerList.size()];
-        offerList.toArray(offers);
-
-        return offers;
+        return query;
     }
 
 }
