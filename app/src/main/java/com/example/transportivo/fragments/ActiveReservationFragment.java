@@ -20,7 +20,6 @@ import com.example.transportivo.adapters.ActiveReservationAdapter;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,12 +59,12 @@ public class ActiveReservationFragment extends Fragment {
 
         Uri uri = Uri.parse(URL);
         ContentResolver contentResolver = getContext().getContentResolver();
-        Cursor cursor = contentResolver.query(uri, null, Offer.Fields.offerStatus + "= ? " , new String[] {OfferStatus.IN_PROGRESS.toString()}, null);
+        Cursor cursor = contentResolver.query(uri, null, Offer.Fields.offerStatus + "= ? ", new String[]{OfferStatus.IN_PROGRESS.toString()}, null);
 
         if (cursor.moveToFirst()) {
             do {
                 Offer offer = new Offer();
-                offer.setId(cursor.getLong(cursor.getColumnIndex(Offer.Fields.id)));
+                offer.setId(cursor.getString(cursor.getColumnIndex(Offer.Fields.id)));
                 offer.setDateTimeArrival(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeArrival)));
                 offer.setDateTimeDeparture(cursor.getString(cursor.getColumnIndex(Offer.Fields.dateTimeDeparture)));
                 offer.setLocationFrom(cursor.getString(cursor.getColumnIndex(Offer.Fields.locationFrom)));
