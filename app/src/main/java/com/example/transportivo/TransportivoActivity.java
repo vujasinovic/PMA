@@ -16,11 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -59,12 +61,12 @@ public class TransportivoActivity extends AppCompatActivity {
                         .setDrawerLayout(drawerLayout)
                         .build());
         setupWithNavController(navigationView, navController);
-        createNotificationChannel();
     }
 
     private void initializeListeners(NavigationView navigationView) {
         final MenuItem logoutItem = navigationView.getMenu().findItem(R.id.nav_logout);
         logoutItem.setOnMenuItemClickListener(this::performLogout);
+        final MenuItem settings = navigationView.getMenu().findItem(R.id.nav_settings);
     }
 
     private boolean performLogout(@Nullable MenuItem menuItem) {
@@ -76,6 +78,7 @@ public class TransportivoActivity extends AppCompatActivity {
 
     private void displayLoggedUserInfo(NavigationView navigationView) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        System.out.println("TOKEN:" + FirebaseInstanceId.getInstance().getToken());
         final View headerView = navigationView.getHeaderView(0);
         final TextView headerTitle = headerView.findViewById(R.id.nav_header_title);
         final TextView headerSubtitle = headerView.findViewById(R.id.nav_header_subtitle);
@@ -102,16 +105,5 @@ public class TransportivoActivity extends AppCompatActivity {
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
-    private void createNotificationChannel() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("CHANEL", "Reservayion", importance);
-            channel.setDescription("You have one offer");
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 }

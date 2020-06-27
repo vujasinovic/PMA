@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
@@ -9,19 +10,41 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+
         <LinearLayout
             style="@style/FormTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="136dp"
-                android:layout_height="148dp"
-                android:layout_margin="10dp"
-                android:layout_marginTop="15dp"
-                android:src="@mipmap/ic_launcher_round" />
+
+            <RelativeLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/side_nav_bar">
+
+                <TextView
+                    android:id="@+id/usernameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="60dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/white"
+                    android:textSize="35dp" />
+
+                <ImageButton
+                    android:id="@+id/editButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_edit"
+                    android:tint="@color/white" />
+
+            </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/FormTheme"
@@ -29,11 +52,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
+                    android:id="@+id/userLastnameAndName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Username" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/FormTheme"
@@ -41,56 +65,30 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
+                    android:id="@+id/userEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:password="true" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/FormTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="First Name" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/FormTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Last Name" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dateInputHolder"
                 style="@style/FormTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:endIconDrawable="@drawable/ic_date_range_black_24dp"
-                app:endIconTint="@color/secondary"
-                app:endIconMode="custom">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dateInput"
+                >
+
+                <EditText
+                    android:id="@+id/userPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:hint="Datebirth" />
+                    android:text="+38164225883" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
@@ -98,6 +96,22 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Save"
                 android:textColor="@color/textSecondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Comments"
+                android:textColor="@color/textPrimary"
+                android:textSize="30dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
