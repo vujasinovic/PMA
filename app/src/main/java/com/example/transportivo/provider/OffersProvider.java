@@ -79,7 +79,7 @@ public class OffersProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         long id = db.insert(OffersTableHelper.TABLE_NAME, "", values);
-
+         db.execSQL("DROP TABLE Offers");
         if (id > 0) {
             Uri uriWithId = ContentUris.withAppendedId(CONTENT_URI, id);
             ContentResolver contentResolver = Objects.requireNonNull(getContext()).getContentResolver();

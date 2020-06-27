@@ -36,6 +36,12 @@
         tools:layout="@layout/reservations_fragment" />
 
     <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.transportivo.fragments.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings" />
+
+    <fragment
         android:id="@+id/nav_offer_overview"
         android:name="com.example.transportivo.fragments.OfferOverviewFragment">
         <argument

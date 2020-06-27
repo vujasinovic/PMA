@@ -16,9 +16,9 @@
             style="@style/FormTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_weight="0.5"
             android:hint="@string/fromDestination">
 
             <com.google.android.material.textfield.TextInputEditText

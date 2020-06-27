@@ -10,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
+import com.example.transportivo.model.Notification;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
-    String[] data = {};
+    Notification[] data = {};
 
     private LayoutInflater layoutInflater;
 
-    public NotificationAdapter(String[] strings) {
+    public NotificationAdapter(Notification[] strings) {
         data = strings;
 
     }
@@ -32,9 +33,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        String title = data[position];
+        final Notification notification = data[position];
 
-        holder.notificationTitle.setText(title);
+        holder.notificationTitle.setText(notification.getTitle());
+        holder.notificationContext.setText(notification.getBody());
     }
 
     @Override
