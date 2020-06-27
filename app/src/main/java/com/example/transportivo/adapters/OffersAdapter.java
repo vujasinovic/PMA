@@ -37,7 +37,10 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
         final Offer offer = data[position];
         final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
 
-        holder.offerPlace.setText(title);
+        holder.place.setText(title);
+        holder.price.setText(offer.getPrice());
+        holder.capacity.setText(offer.getCapacity());
+        holder.description.setText(offer.getDescription());
     }
 
     @Override
@@ -45,16 +48,20 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
         return data.length;
     }
 
-    public class OffersViewHolder extends RecyclerView.ViewHolder {
-        final TextView offerPlace;
-        final TextView offerPrice;
+    class OffersViewHolder extends RecyclerView.ViewHolder {
+        final TextView place;
+        final TextView price;
+        final TextView capacity;
+        final TextView description;
 
-        public OffersViewHolder(@NonNull View itemView) {
+        OffersViewHolder(@NonNull View itemView) {
             super(itemView);
-            offerPlace = itemView.findViewById(R.id.offerPlace);
-            offerPrice = itemView.findViewById(R.id.offerPrice);
+            place = itemView.findViewById(R.id.offerPlace);
+            price = itemView.findViewById(R.id.offerPrice);
+            capacity = itemView.findViewById(R.id.offerCapacity);
+            description = itemView.findViewById(R.id.offerDescription);
 
-            offerPlace.setOnClickListener(v -> {
+            place.setOnClickListener(v -> {
                 onOfferSelected.accept(data[getAdapterPosition()]);
             });
         }

@@ -58,6 +58,17 @@ public class FirebaseClient<T> {
                 .addOnCompleteListener(command -> result.accept(onCompleteCreate(command, (Class<T>) entity.getClass())));
     }
 
+    public void update(T entity, Consumer<T> result) {
+        firebaseFunctions = FirebaseFunctions.getInstance();
+        FirebaseCallable callableFunctions = getFirebaseCallableFunctions((Class<T>) entity.getClass());
+
+        Map data = objectMapper.convertValue(entity, Map.class);
+
+        firebaseFunctions.getHttpsCallable(callableFunctions.update())
+                .call(data)
+                .addOnCompleteListener(command -> result.accept(onCompleteCreate(command, (Class<T>) entity.getClass())));
+    }
+
     public void getOne(Class<T> entityClass, String id, Consumer<T> result) {
         firebaseFunctions = FirebaseFunctions.getInstance();
         FirebaseCallable callableFunctions = getFirebaseCallableFunctions(entityClass);

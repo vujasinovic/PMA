@@ -14,5 +14,4 @@ import lombok.experimental.FieldNameConstants;
 public class Reservation implements Serializable {
     private Double rating;
     private String comment;
-
 }

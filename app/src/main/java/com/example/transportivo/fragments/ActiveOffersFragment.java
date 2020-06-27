@@ -21,7 +21,7 @@ import com.example.transportivo.provider.FirebaseClient;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActiveReservationFragment extends Fragment {
+public class ActiveOffersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -40,7 +40,10 @@ public class ActiveReservationFragment extends Fragment {
 
         FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
 
-        firebaseClient.getAll(Offer.class, buildQuery(), result -> {
+        Map<String, Object> query = new HashMap<>();
+        query.put(Offer.Fields.offerStatus, OfferStatus.IN_PROGRESS.toString());
+
+        firebaseClient.getAll(Offer.class, query, result -> {
             adapter = new ActiveReservationAdapter(result, this::openOfferOverview);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
@@ -52,13 +55,6 @@ public class ActiveReservationFragment extends Fragment {
     private void openOfferOverview(Offer offer) {
         final OfferOverviewFragmentArgs args = new OfferOverviewFragmentArgs.Builder(offer).build();
         Navigation.findNavController(getView()).navigate(R.id.nav_offer_overview, args.toBundle());
-    }
-
-    private Map<String, Object> buildQuery() {
-        Map<String, Object> query = new HashMap<>();
-        query.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
-
-        return query;
     }
 
 }
