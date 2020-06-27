@@ -1,8 +1,8 @@
 package com.example.transportivo.fragments;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,8 +17,7 @@ import com.example.transportivo.activity.PlacePickerActivity;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
 import com.example.transportivo.model.Reservation;
-import com.example.transportivo.provider.OffersProvider;
-import com.example.transportivo.provider.ReservationProvider;
+import com.example.transportivo.provider.FirebaseClient;
 
 import java.util.Map;
 
@@ -35,6 +34,9 @@ public class OfferOverviewFragment extends BaseFragment {
             OfferStatus.IN_PROGRESS, R.color.fui_bgTwitter,
             OfferStatus.CANCELED, R.color.design_default_color_error,
             OfferStatus.COMPLETED, R.color.primaryLight);
+
+    private static final String EMPTY = "";
+    private static final String TAG = "OfferOverviewFragment";
 
     public OfferOverviewFragment() {
         super(R.layout.offer_overview);
@@ -75,27 +77,26 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private void setupAmountAndPrice(Offer offer) {
-        ContentValues values = new ContentValues();
-        final boolean accepted = false; //TODO: set to true if offer accepted (requires Offer modification)
+        final boolean accepted = isOfferAccepted(offer);
         final View container = getView().findViewById(R.id.amountAndPrice);
-        final TextView reservedAmount = getView().findViewById(R.id.reserverdAmount);
+        final TextView capacity = getView().findViewById(R.id.reserverdAmount);
         final TextView price = getView().findViewById(R.id.price);
+
         container.setVisibility(accepted ? View.VISIBLE : View.GONE);
-        price.setText("Price: 200$");
-        reservedAmount.setText("Reserved 5T");
-        values.put(Offer.Fields.price, price.toString());
-        values.put(Offer.Fields.capacity, reservedAmount.toString());
-        //TODO find id from offer
-        values.put("id", "1");
+        price.setText(offer.getPrice());
+        capacity.setText(offer.getCapacity());
 
-        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
+        FirebaseClient<Offer> offerFirebaseClient = new FirebaseClient<>();
+        offerFirebaseClient.update(offer, res -> Log.i(TAG, "Successfully updated offer " + offer.getId()));
+    }
 
-
+    private boolean isOfferAccepted(Offer offer) {
+        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS);
     }
 
     private void setupDescription(Offer offer) {
         final TextView description = getView().findViewById(R.id.description);
-        description.setText("A description for this offer will be displayed right here.");
+        description.setText(offer.getDescription());
     }
 
     private void setupStatusBar(Offer offer) {
@@ -140,65 +141,66 @@ public class OfferOverviewFragment extends BaseFragment {
     private void complete(View view) {
         //TODO:  rate, comment
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
-        final Offer offer = args.getOffer();
-        ContentValues values = new ContentValues();
-        values.put(Offer.Fields.offerStatus, OfferStatus.COMPLETED.toString());
-        values.put("id", offer.getId().toString());
+        Offer offer = args.getOffer();
+        offer.setOfferStatus(OfferStatus.COMPLETED);
 
-        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
-
-        Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
-
+        FirebaseClient<Offer> offerFirebaseClient = new FirebaseClient<>();
+        offerFirebaseClient.update(offer, res -> {
+            Log.i(TAG, "Successfully updated offer " + offer.getId() + " [COMPLETED]");
+            Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+        });
     }
 
     private void cancel(View view) {
-        //TODO: cancel reservation (for user) or cancel offer (for transporter)
+        final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
+        Offer offer = args.getOffer();
+        offer.setOfferStatus(OfferStatus.CANCELED);
+
+        FirebaseClient<Offer> offerFirebaseClient = new FirebaseClient<>();
+        offerFirebaseClient.update(offer, res -> {
+            Log.i(TAG, "Successfully updated offer " + offer.getId() + " [CANCELED]");
+            Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+        });
     }
 
     private void acceptOffer(View view) {
-
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
-        ContentValues values = new ContentValues();
-        values.put(Reservation.Fields.rating, 0);
-        values.put(Reservation.Fields.comment, "");
+        final Reservation reservation = new Reservation(0d, EMPTY);
 
-        values.put("id", offer.getId().toString());
-        getContext().getContentResolver().insert(ReservationProvider.CONTENT_URI, values);
+        FirebaseClient<Reservation> reservationFirebaseClient = new FirebaseClient<>();
+        reservationFirebaseClient.create(reservation, result ->
+                Log.i(TAG, "Successfully created new reservation")
+        );
 
-        updateOffer(offer);
+        FirebaseClient<Offer> offerFirebaseClient = new FirebaseClient<>();
+        offer.setOfferStatus(OfferStatus.IN_PROGRESS);
+        offerFirebaseClient.update(offer, res -> {
+                    Log.i(TAG, "Successfully updated offer " + offer.getId() + " [IN PROGRESS]");
+                    Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+                }
+        );
+
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
         NotificationCompat.Builder notification = notification();
 
         notificationManagerCompat.notify(1, notification.build());
-
-    }
-
-    private void updateOffer(Offer offer) {
-        ContentValues values = new ContentValues();
-        values.put(Offer.Fields.offerStatus, OfferStatus.IN_PROGRESS.toString());
-        values.put("id", offer.getId().toString());
-
-        getContext().getContentResolver().update(OffersProvider.CONTENT_URI, values, "id", null);
-        Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
-
     }
 
     private boolean checkStatus(Offer offer) {
-        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS) ? true : false;
+        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS);
     }
 
     private NotificationCompat.Builder notification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "CHANEL")
                 .setSmallIcon(R.drawable.ic_reservations)
                 .setContentTitle("Reservation")
-                .setContentText("You have one reservation by user jovanagrabez")
+                .setContentText("Reservation status was changed")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("You have one reservation by user jovanagrabez"))
+                        .bigText("Reservation status was changed"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         return builder;
     }
-
 
 }

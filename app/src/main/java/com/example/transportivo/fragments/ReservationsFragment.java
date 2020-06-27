@@ -21,18 +21,18 @@ public class ReservationsFragment extends BaseFragment {
 
     @Override
     protected View initializeView(View view) {
-        final ActiveReservationFragment activeReservationFragment = new ActiveReservationFragment();
-        final HistoryFragment historyFragment = new HistoryFragment();
-        final OfferFragment offerFragment = new OfferFragment();
+        final ActiveOffersFragment activeOffersFragment = new ActiveOffersFragment();
+        final OffersHistoryFragment offersHistoryFragment = new OffersHistoryFragment();
+        final OffersFragment offersFragment = new OffersFragment();
         final TabLayout tabLayout = view.findViewById(R.id.tabs);
         final ViewPager viewPager = view.findViewById(R.id.viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
 
         ViewAdapter viewAdapter = new ViewAdapter(getFragmentManager(), 0);
-        viewAdapter.addFragment(offerFragment, "Offers");
-        viewAdapter.addFragment(activeReservationFragment, "Active");
-        viewAdapter.addFragment(historyFragment, "History");
+        viewAdapter.addFragment(offersFragment, "Offers");
+        viewAdapter.addFragment(activeOffersFragment, "Active");
+        viewAdapter.addFragment(offersHistoryFragment, "History");
         viewPager.setAdapter(viewAdapter);
 
         return view;

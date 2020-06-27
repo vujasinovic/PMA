@@ -37,7 +37,10 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
         final Offer offer = data[position];
         final String title = offer.getLocationFrom() + " to " + offer.getLocationTo();
 
-        holder.offerPlace.setText(title);
+        holder.place.setText(title);
+        holder.price.setText(offer.getPrice());
+        holder.capacity.setText(offer.getCapacity());
+        holder.description.setText(offer.getDescription());
     }
 
     @Override
@@ -47,17 +50,19 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
 
     class HistoryReservationViewHolder extends RecyclerView.ViewHolder {
 
-        TextView offerPlace;
-        TextView offerPrice;
+        TextView place;
+        TextView price;
+        TextView description;
+        TextView capacity;
 
         HistoryReservationViewHolder(@NonNull View itemView) {
             super(itemView);
-            offerPlace = itemView.findViewById(R.id.historyPlace);
-            offerPrice = itemView.findViewById(R.id.historyPrice);
+            place = itemView.findViewById(R.id.historyPlace);
+            price = itemView.findViewById(R.id.historyPrice);
+            description = itemView.findViewById(R.id.historyDescription);
+            capacity = itemView.findViewById(R.id.historyCapacity);
 
-            offerPlace.setOnClickListener(v -> {
-                onOfferSelected.accept(data[getAdapterPosition()]);
-            });
+            place.setOnClickListener(v -> onOfferSelected.accept(data[getAdapterPosition()]));
         }
     }
 }
