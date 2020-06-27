@@ -51,6 +51,8 @@ public class SettingsFragment extends BaseFragment {
         TextInputLayout textInputLayout = view.findViewById(R.id.editPassword);
         Button saveButton = view.findViewById(R.id.savePassword);
 
+
+
         user.updatePassword(password.getText().toString()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 saveButton.setVisibility(View.GONE);

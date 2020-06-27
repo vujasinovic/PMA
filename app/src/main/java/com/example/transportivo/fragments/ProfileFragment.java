@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.transportivo.R;
 import com.example.transportivo.adapters.CommentAdapter;
 import com.example.transportivo.adapters.NotificationAdapter;
+import com.example.transportivo.model.Comment;
+import com.example.transportivo.model.Notification;
+import com.example.transportivo.provider.FirebaseClient;
 import com.example.transportivo.ui.TransportivoDatePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +28,9 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.NonNull;
 
@@ -51,8 +57,18 @@ public class ProfileFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
-        adapter = new CommentAdapter(users);
-        recyclerView.setAdapter(adapter);
+
+        //retrieve notifications
+        Map<String, Object> query = new HashMap<>();
+        query.put("userId", user.getUid());
+
+        FirebaseClient<Comment> firebaseClient = new FirebaseClient<>();
+        firebaseClient.getAll(Comment.class, query, result -> {
+            adapter = new CommentAdapter(result);
+            recyclerView.setAdapter(adapter);
+        });
+
+
 
         AppCompatButton saveButton = view.findViewById(R.id.saveButton);
         ImageButton editButton = view.findViewById(R.id.editButton);

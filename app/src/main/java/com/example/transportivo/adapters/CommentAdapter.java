@@ -9,15 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
-import com.example.transportivo.model.Notification;
+import com.example.transportivo.model.Comment;
+
+import lombok.SneakyThrows;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    String[] data = {};
+    Comment[] data = {};
 
     private LayoutInflater layoutInflater;
 
-    public CommentAdapter(String[] strings) {
+    public CommentAdapter(Comment[] strings) {
         data = strings;
 
     }
@@ -30,12 +32,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return new CommentAdapter.CommentViewHolder(view);
     }
 
+    @SneakyThrows
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        final String username = data[position];
-
-        holder.userName.setText(username);
-        holder.comment.setText("Dobar prevoz krompira");
+        final Comment comment = data[position];
+        holder.userName.setText(comment.getCommentatorName());
+        holder.comment.setText(comment.getComment());
     }
 
     @Override
