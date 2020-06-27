@@ -39,7 +39,7 @@ public class HistoryReservationAdapter extends RecyclerView.Adapter<HistoryReser
 
         holder.place.setText(title);
         holder.price.setText(offer.getPrice());
-        holder.capacity.setText(offer.getPrice());
+        holder.capacity.setText(offer.getCapacity());
         holder.description.setText(offer.getDescription());
     }
 
