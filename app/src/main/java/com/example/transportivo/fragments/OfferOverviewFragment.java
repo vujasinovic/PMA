@@ -139,7 +139,6 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private void complete(View view) {
-        //TODO:  rate, comment
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         Offer offer = args.getOffer();
         offer.setOfferStatus(OfferStatus.COMPLETED);
@@ -147,7 +146,11 @@ public class OfferOverviewFragment extends BaseFragment {
         FirebaseClient<Offer> offerFirebaseClient = new FirebaseClient<>();
         offerFirebaseClient.update(offer, res -> {
             Log.i(TAG, "Successfully updated offer " + offer.getId() + " [COMPLETED]");
-            Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
+
+            final ReservationRatingFragmentArgs reservationRatingArgs = new ReservationRatingFragmentArgs.Builder(offer).build();
+            Navigation.findNavController(getView()).navigate(R.id.nav_reservation_rating, reservationRatingArgs.toBundle());
+
+//            Navigation.findNavController(getView()).navigate(R.id.nav_reservations);
         });
     }
 
@@ -166,7 +169,11 @@ public class OfferOverviewFragment extends BaseFragment {
     private void acceptOffer(View view) {
         final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
-        final Reservation reservation = new Reservation(0d, EMPTY);
+        final Reservation reservation = new Reservation();
+
+        reservation.setComment("");
+        reservation.setRating(0f);
+        reservation.setOfferId(offer.getId());
 
         FirebaseClient<Reservation> reservationFirebaseClient = new FirebaseClient<>();
         reservationFirebaseClient.create(reservation, result ->

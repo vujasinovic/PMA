@@ -12,6 +12,8 @@ import lombok.experimental.FieldNameConstants;
 @AllArgsConstructor
 @FieldNameConstants
 public class Reservation implements Serializable {
-    private Double rating;
+    private String id;
+    private float rating;
     private String comment;
+    private String offerId;
 }

@@ -23,4 +23,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="logout_menu_item">Log Out</string>
+    <string name="rating">Rating</string>
+    <string name="comment">Leave a comment</string>
+    <string name="complete">Complete</string>
 </resources>
