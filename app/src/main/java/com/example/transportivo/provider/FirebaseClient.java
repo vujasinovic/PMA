@@ -25,12 +25,14 @@ import java.util.function.Consumer;
 public class FirebaseClient<T> {
     private static final String ID = "id";
     private static final String DATA = "data";
+    private static final String REGION = "europe-west3";
 
     private FirebaseFunctions firebaseFunctions;
     private ObjectMapper objectMapper;
 
     public FirebaseClient() {
         this.objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        firebaseFunctions = FirebaseFunctions.getInstance(REGION);
     }
 
     public void getAll(Class<T> entityClass, Consumer<T[]> entities) {
@@ -38,7 +40,6 @@ public class FirebaseClient<T> {
     }
 
     public void getAll(Class<T> entityClass, Map<String, Object> query, Consumer<T[]> entities) {
-        firebaseFunctions = FirebaseFunctions.getInstance();
         FirebaseCallable callableFunctions = getFirebaseCallableFunctions(entityClass);
 
         firebaseFunctions.getHttpsCallable(callableFunctions.getAll())
@@ -47,7 +48,6 @@ public class FirebaseClient<T> {
     }
 
     public void create(T entity, Consumer<T> result) {
-        firebaseFunctions = FirebaseFunctions.getInstance();
         FirebaseCallable callableFunction = getFirebaseCallableFunctions((Class<T>) entity.getClass());
 
         Map data = objectMapper.convertValue(entity, Map.class);
@@ -59,7 +59,6 @@ public class FirebaseClient<T> {
     }
 
     public void update(T entity, Consumer<T> result) {
-        firebaseFunctions = FirebaseFunctions.getInstance();
         FirebaseCallable callableFunctions = getFirebaseCallableFunctions((Class<T>) entity.getClass());
 
         Map data = objectMapper.convertValue(entity, Map.class);
@@ -70,7 +69,6 @@ public class FirebaseClient<T> {
     }
 
     public void getOne(Class<T> entityClass, String id, Consumer<T> result) {
-        firebaseFunctions = FirebaseFunctions.getInstance();
         FirebaseCallable callableFunctions = getFirebaseCallableFunctions(entityClass);
 
         Map<String, String> idMap = new HashMap<>();
