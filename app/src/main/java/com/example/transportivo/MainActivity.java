@@ -13,7 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
@@ -54,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
-            NotificationToken notificationToken = new NotificationToken();
-            notificationToken.setToken_id(FirebaseInstanceId.getInstance().getToken());
-            FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
-            firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
-
+            generatingToken();
             startTransportivoActivity();
         }
     }
@@ -68,4 +66,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void generatingToken() {
+        NotificationToken notificationToken = new NotificationToken();
+        notificationToken.setToken_id(FirebaseInstanceId.getInstance().getToken());
+        FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
+        Map<String, Object> query = new HashMap<>();
+        query.put("owner", FirebaseAuth.getInstance().getUid());
+        firebaseClient.getAll(NotificationToken.class, query, result -> {
+            if (result.length > 0) {
+                result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
+                firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
+            } else {
+
+                firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
+            }
+        });
+
+
+    }
 }
