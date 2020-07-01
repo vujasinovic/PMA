@@ -2,11 +2,15 @@ package com.example.transportivo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.transportivo.model.NotificationToken;
+import com.example.transportivo.provider.FirebaseClient;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
+            NotificationToken notificationToken = new NotificationToken();
+            notificationToken.setToken_id(FirebaseInstanceId.getInstance().getToken());
+            FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
+            firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
+
             startTransportivoActivity();
         }
     }
