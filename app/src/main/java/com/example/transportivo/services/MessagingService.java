@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.transportivo.MainActivity;
 import com.example.transportivo.R;
@@ -37,10 +38,10 @@ public class MessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.mipmap.ic_app_round)
                 .setAutoCancel(true);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(1, notificationBuilder.build());
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+        int notification_id = (int) System.currentTimeMillis();
+        notificationManagerCompat.notify(notification_id, notificationBuilder.build());
     }
 
 
@@ -50,4 +51,4 @@ public class MessagingService extends FirebaseMessagingService {
 
     }
 
-    }
+}

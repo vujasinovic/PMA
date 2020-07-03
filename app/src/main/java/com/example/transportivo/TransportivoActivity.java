@@ -69,6 +69,7 @@ public class TransportivoActivity extends AppCompatActivity {
                         .setDrawerLayout(drawerLayout)
                         .build());
         setupWithNavController(navigationView, navController);
+        createNotificationChannel();
     }
 
     private void initializeListeners(NavigationView navigationView) {
@@ -113,5 +114,18 @@ public class TransportivoActivity extends AppCompatActivity {
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
+
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("channel_id", "channel_id", importance);
+            channel.setDescription("You have one offer");
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 }
