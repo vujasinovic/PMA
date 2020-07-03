@@ -1,6 +1,7 @@
 package com.example.transportivo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -30,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
 
         if (isUserAuthenticated()) {
             startTransportivoActivity();
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
-            generatingToken();
             startTransportivoActivity();
         }
     }
@@ -74,33 +72,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void generatingToken() {
 
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.i("INSTANCE FAILED", "getInstanceId failed", task.getException());
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = task.getResult().getToken();
-                    NotificationToken notificationToken = new NotificationToken();
-                    notificationToken.setToken_id(token);
-                    FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
-                    Map<String, Object> query = new HashMap<>();
-                    query.put("owner", FirebaseAuth.getInstance().getUid());
-                    firebaseClient.getAll(NotificationToken.class, query, result -> {
-                        if (result.length > 0) {
-                            result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
-                            firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
-                        } else {
-
-                            firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
-                        }
-                    });
-                });
-
-
-    }
 }

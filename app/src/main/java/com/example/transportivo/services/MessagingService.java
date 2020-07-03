@@ -3,6 +3,7 @@ package com.example.transportivo.services;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.LinearLayout;
 
@@ -48,7 +49,14 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         Log.i("UPDATE TOKEN IN SERVICE", token);
+        SharedPreferences.Editor editor = getSharedPreferences("TOKEN_PREF", MODE_PRIVATE).edit();
+        if (token!=null) {
+            editor.putString("token", token);
+            editor.apply();
+        }
+
 
     }
+
 
 }

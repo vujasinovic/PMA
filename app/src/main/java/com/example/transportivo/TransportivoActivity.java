@@ -2,7 +2,9 @@ package com.example.transportivo;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +54,11 @@ public class TransportivoActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE);
+        String retrivedToken = preferences.getString("token", null);
+
+        createOrUpdateToken(retrivedToken);
         setContentView(R.layout.activity_main);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -86,8 +93,6 @@ public class TransportivoActivity extends AppCompatActivity {
 
     private void displayLoggedUserInfo(NavigationView navigationView) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        System.out.println("TOKEN:" + FirebaseInstanceId.getInstance().getToken());
         final View headerView = navigationView.getHeaderView(0);
         final TextView headerTitle = headerView.findViewById(R.id.nav_header_title);
         final TextView headerSubtitle = headerView.findViewById(R.id.nav_header_subtitle);
@@ -126,6 +131,25 @@ public class TransportivoActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+
+    private void createOrUpdateToken(String token) {
+
+        NotificationToken notificationToken = new NotificationToken();
+        notificationToken.setToken_id(token);
+        FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
+        Map<String, Object> query = new HashMap<>();
+        query.put("owner", FirebaseAuth.getInstance().getUid());
+        firebaseClient.getAll(NotificationToken.class, query, result -> {
+            if (result.length > 0) {
+                result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
+                firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
+            } else {
+
+                firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
+            }
+        });
     }
 
 }
