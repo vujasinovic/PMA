@@ -9,13 +9,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.transportivo.model.NotificationToken;
 import com.example.transportivo.provider.FirebaseClient;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lombok.NonNull;
 
 import static java.util.Objects.nonNull;
 
@@ -25,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
 
         if (isUserAuthenticated()) {
             startTransportivoActivity();
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     RC_SIGN_IN);
         }
+
     }
 
     private boolean isUserAuthenticated() {
@@ -67,20 +75,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generatingToken() {
-        NotificationToken notificationToken = new NotificationToken();
-        notificationToken.setToken_id(FirebaseInstanceId.getInstance().getToken());
-        FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
-        Map<String, Object> query = new HashMap<>();
-        query.put("owner", FirebaseAuth.getInstance().getUid());
-        firebaseClient.getAll(NotificationToken.class, query, result -> {
-            if (result.length > 0) {
-                result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
-                firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
-            } else {
 
-                firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
-            }
-        });
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.i("INSTANCE FAILED", "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+                    NotificationToken notificationToken = new NotificationToken();
+                    notificationToken.setToken_id(token);
+                    FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
+                    Map<String, Object> query = new HashMap<>();
+                    query.put("owner", FirebaseAuth.getInstance().getUid());
+                    firebaseClient.getAll(NotificationToken.class, query, result -> {
+                        if (result.length > 0) {
+                            result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
+                            firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
+                        } else {
+
+                            firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
+                        }
+                    });
+                });
 
 
     }

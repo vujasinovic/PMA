@@ -77,7 +77,6 @@ public class TransportivoActivity extends AppCompatActivity {
     }
 
     private boolean performLogout(@Nullable MenuItem menuItem) {
-        updateToken();
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -114,21 +113,5 @@ public class TransportivoActivity extends AppCompatActivity {
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
-    private void updateToken() {
-    /*    FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
-        Map<String, Object> query = new HashMap<>();
-        query.put("owner", FirebaseAuth.getInstance().getUid());
-
-        firebaseClient.getAll(NotificationToken.class, query, result -> {
-                    result[0].setToken_id("");
-                    firebaseClient.update(result[0], res -> {
-                        Log.i("TOKEN UPDATE", "Successfully updated token ");
-                    });
-
-                }
-        );*/
-
-
-    }
 
 }
