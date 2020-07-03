@@ -47,7 +47,8 @@ public class TransportivoActivity extends AppCompatActivity {
             R.id.nav_add_offer,
             R.id.nav_notifications,
             R.id.nav_reservations,
-            R.id.nav_settings
+            R.id.nav_settings,
+            R.id.nav_search
     };
 
 

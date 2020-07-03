@@ -26,6 +26,11 @@
             android:title="@string/settings_menu_item" />
 
         <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search"
+            android:title="Search" />
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_close"
             android:title="@string/logout_menu_item" />
