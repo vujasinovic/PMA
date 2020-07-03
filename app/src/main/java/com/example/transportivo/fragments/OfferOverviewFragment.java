@@ -14,11 +14,17 @@ import androidx.navigation.Navigation;
 
 import com.example.transportivo.R;
 import com.example.transportivo.activity.PlacePickerActivity;
+import com.example.transportivo.model.Notification;
+import com.example.transportivo.model.NotificationToken;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
 import com.example.transportivo.model.Reservation;
 import com.example.transportivo.provider.FirebaseClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.functions.FirebaseFunctions;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.google.android.gms.common.util.CollectionUtils.mapOf;
@@ -188,26 +194,33 @@ public class OfferOverviewFragment extends BaseFragment {
                 }
         );
 
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
-        NotificationCompat.Builder notification = notification();
 
-        notificationManagerCompat.notify(1, notification.build());
+        FirebaseClient<NotificationToken> tokenFirebaseClient = new FirebaseClient<>();
+        Map<String, Object> query = new HashMap<>();
+        query.put("owner", offer.getOwner());
+        System.out.println("OWNER" + offer.getOwner());
+        tokenFirebaseClient.getAll(NotificationToken.class, query, res -> {
+            Map<String, Object> data = new HashMap<>();
+            data.put("title", "Reservation");
+            data.put("userToken", res[0].getToken_id());
+            data.put("body", "You have one reservation from " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            data.put("push", true);
+            FirebaseFunctions functions = FirebaseFunctions.getInstance();
+            functions.getHttpsCallable("sendNotification").call(data);
+
+
+        });
+
+        FirebaseClient<Notification> notificationFirebaseClient = new FirebaseClient<>();
+        Notification newNotification = new Notification(offer.getOwner(), "Reservation", FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + " reserved your offer");
+        notificationFirebaseClient.create(newNotification, o -> Log.i("CREATE NOTIFICATION", "Successfully created notification"));
+
+
     }
 
     private boolean checkStatus(Offer offer) {
         return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS);
     }
 
-    private NotificationCompat.Builder notification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "CHANEL")
-                .setSmallIcon(R.drawable.ic_reservations)
-                .setContentTitle("Reservation")
-                .setContentText("Reservation status was changed")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Reservation status was changed"))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        return builder;
-    }
 
 }

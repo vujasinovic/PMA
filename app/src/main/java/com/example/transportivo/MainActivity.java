@@ -1,15 +1,27 @@
 package com.example.transportivo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.transportivo.model.NotificationToken;
+import com.example.transportivo.provider.FirebaseClient;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import lombok.NonNull;
 
 import static java.util.Objects.nonNull;
 
@@ -36,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     RC_SIGN_IN);
         }
+
     }
 
     private boolean isUserAuthenticated() {
@@ -58,5 +71,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TransportivoActivity.class);
         startActivity(intent);
     }
+
 
 }

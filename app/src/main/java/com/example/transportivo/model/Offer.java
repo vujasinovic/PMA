@@ -21,4 +21,5 @@ public class Offer implements Serializable {
     private OfferStatus offerStatus;
     private String price;
     private String capacity;
+    private String owner;
 }

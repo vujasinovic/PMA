@@ -5,10 +5,12 @@ import android.util.Log;
 import com.example.transportivo.globals.CommentCallableFunctions;
 import com.example.transportivo.globals.FirebaseCallable;
 import com.example.transportivo.globals.NotificationCallableFunctions;
+import com.example.transportivo.globals.NotificationTokenCallableFunctions;
 import com.example.transportivo.globals.OffersCallableFunctions;
 import com.example.transportivo.globals.ReservationCallableFunctions;
 import com.example.transportivo.model.Comment;
 import com.example.transportivo.model.Notification;
+import com.example.transportivo.model.NotificationToken;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.Reservation;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -127,10 +129,12 @@ public class FirebaseClient<T> {
             firebaseCallable = new OffersCallableFunctions();
         } else if (entityClass.equals(Reservation.class)) {
             firebaseCallable = new ReservationCallableFunctions();
-        }else if (entityClass.equals(Notification.class)) {
+        } else if (entityClass.equals(Notification.class)) {
             firebaseCallable = new NotificationCallableFunctions();
-        }else if (entityClass.equals(Comment.class)) {
+        } else if (entityClass.equals(Comment.class)) {
             firebaseCallable = new CommentCallableFunctions();
+        } else if (entityClass.equals(NotificationToken.class)) {
+            firebaseCallable = new NotificationTokenCallableFunctions();
         }
 
         return firebaseCallable;

@@ -42,7 +42,7 @@ public class NotificationFragment extends BaseFragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
         Map<String, Object> query = new HashMap<>();
-        query.put("UID", tokenId);
+        query.put("uid", tokenId);
 
         FirebaseClient<Notification> firebaseClient = new FirebaseClient<>();
         firebaseClient.getAll(Notification.class, query, result -> {
