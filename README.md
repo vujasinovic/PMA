@@ -30,4 +30,4 @@ Klikom na stavku menija "Reservation" korisnik moze da vidi tri liste ponuda. Pr
 novoj rezervaciji.Druga "Active" lista predstavlja ponude koje su u toku, odnosno prevoz koji još nije stigao do odredišta.
 Treća, "History" lista predstavlja sve zavrsene (Completed ili Canceled) ponude vezane za trenutno autentifikovanog korisnika. Takodje, korisnik može da pregleda sve notifikacije koje su mu pristigle za ponude klikom na stavku menija "Notifiations".
 Opcija "Settings" omogućava da korisnik promjeni svoju šifru.
-Sinhronizacija je izvršena nad rezervacijama korisnika.
+Sinhronizacija je izvršena nad rezervacijama i komentarima korisnika.
