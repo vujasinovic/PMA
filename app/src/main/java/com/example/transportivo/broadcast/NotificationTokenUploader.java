@@ -21,21 +21,20 @@ public class NotificationTokenUploader extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo mobNetInfo = connectivityManager.getActiveNetworkInfo();
-        final boolean networkAvailable = mobNetInfo.isAvailable();
+        try {
+            final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final NetworkInfo mobNetInfo = connectivityManager.getActiveNetworkInfo();
+            final boolean networkAvailable = mobNetInfo.isAvailable();
 
-        if (networkAvailable) {
-            try {
+            if (networkAvailable) {
                 final Cursor cursor = context.getContentResolver().query(NotificationTokenProvider.CONTENT_URI, null, null, null, null);
                 if (cursor.moveToLast()) {
                     final String token = cursor.getString(cursor.getColumnIndex("token_id"));
                     uploadToken(token);
                 }
-            } catch (Exception ignored) {
             }
+        } catch (Exception e) {
         }
-
     }
 
     private void uploadToken(String token) {
