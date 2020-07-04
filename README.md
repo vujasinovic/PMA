@@ -21,7 +21,7 @@ Aplikaciju mogu da koriste isključivo autentifikovani korisnici. Prilikom pokre
 da vidi svoj profil, kao i da ga izmjeni. Pored osnovnih informacija o korisniku na profilu su prikazani i komentari.
 Glavna funkcionalnost aplikacije je dodavanje ponude prevoza. Klikom na stavku menija "Add offer" korisniku se otvara forma za dodavanje ponude. Za svaku ponudu potrebno je definisati vrijeme i mjesto polaska i odlaska, opis, kapacitet, cijenu.
 Klikom na stavku menija "Reservation" korisnik moze da vidi tri liste ponuda. Prva "Offers" lista prikazuje sve ponude koje nisu rezervisane. Klikom na jednu od ponuda iz liste otvara se strana sa detaljima o ponudi. Na toj strani je moguce izvršiti rezervaciju ponude. Nakon što korisnik rezerviše ponudu šalje se obavještenje  o
-novoj rezervaciji.Druga "Active" lista predstavlja ponude koje su u toku, odnosno prevoz koji još nije stigao do odredišta (DOPUNITI)
-Treća "History" lista predstavlja istoriju ponuda korisnika. Takodje, korisnik može da pregleda sve notifikacije koje su mu pristigle za ponude klikom na stavku menija "Notifiations".
+novoj rezervaciji.Druga "Active" lista predstavlja ponude koje su u toku, odnosno prevoz koji još nije stigao do odredišta.
+Treća, "History" lista predstavlja sve zavrsene (Completed ili Canceled) ponude vezane za trenutno autentifikovanog korisnika. Takodje, korisnik može da pregleda sve notifikacije koje su mu pristigle za ponude klikom na stavku menija "Notifiations".
 Opcija "Settings" omogućava da korisnik promjeni svoju šifru.
 Sinhronizacija je izvršena nad rezervacijama korisnika.
