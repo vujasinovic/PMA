@@ -16,10 +16,13 @@ import com.example.transportivo.R;
 import com.example.transportivo.adapters.HistoryReservationAdapter;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
-import com.example.transportivo.provider.FirebaseClient;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OffersHistoryFragment extends Fragment {
 
@@ -38,16 +41,25 @@ public class OffersHistoryFragment extends Fragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
-        FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        List<OfferStatus> offerStatuses = Arrays.asList(OfferStatus.CANCELED, OfferStatus.COMPLETED);
 
-        Map<String, Object> query = new HashMap<>();
-        query.put(Offer.Fields.offerStatus, OfferStatus.COMPLETED.toString());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("offer")
+                .whereIn(Offer.Fields.offerStatus, offerStatuses)
+                .get()
+                .addOnCompleteListener(l -> {
+                            List<Offer> offers = l.getResult().getDocuments().stream()
+                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class))
+                                    .collect(Collectors.toList());
 
-        firebaseClient.getAll(Offer.class, query, result -> {
-            adapter = new HistoryReservationAdapter(result, this::openOfferOverview);
-            adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
-        });
+                            Offer[] offersArray = objectMapper.convertValue(offers, Offer[].class);
+
+                            adapter = new HistoryReservationAdapter(offersArray, this::openOfferOverview);
+                            adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapter);
+                        }
+                );
 
         return view;
     }

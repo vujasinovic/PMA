@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -19,16 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.transportivo.model.NotificationToken;
-import com.example.transportivo.model.Offer;
 import com.example.transportivo.provider.FirebaseClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Collections;
@@ -50,16 +46,16 @@ public class TransportivoActivity extends AppCompatActivity {
             R.id.nav_settings,
             R.id.nav_search
     };
-
+    private static final String TAG_NAME = "TransportivoActivity";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE);
-        String retrivedToken = preferences.getString("token", null);
+        String retrievedToken = preferences.getString("token", null);
 
-        createOrUpdateToken(retrivedToken);
+        createOrUpdateToken(retrievedToken);
         setContentView(R.layout.activity_main);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -145,10 +141,9 @@ public class TransportivoActivity extends AppCompatActivity {
         firebaseClient.getAll(NotificationToken.class, query, result -> {
             if (result.length > 0) {
                 result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
-                firebaseClient.update(result[0], o -> Log.i("UPDATE TOKEN", "Successfully updated token"));
+                firebaseClient.update(result[0], o -> Log.i(TAG_NAME, "Successfully updated token"));
             } else {
-
-                firebaseClient.create(notificationToken, o -> Log.i("CREATE TOKEN", "Successfully added new offer"));
+                firebaseClient.create(notificationToken, o -> Log.i(TAG_NAME, "Successfully added TOKEN"));
             }
         });
     }

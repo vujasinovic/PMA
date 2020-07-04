@@ -11,14 +11,17 @@ import com.example.transportivo.R;
 import com.example.transportivo.adapters.OffersAdapter;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.OfferStatus;
-import com.example.transportivo.provider.FirebaseClient;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.SneakyThrows;
 
 public class OffersFragment extends BaseFragment {
+    private static final String OFFER_COLLECTION_NAME = "offer";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -37,15 +40,24 @@ public class OffersFragment extends BaseFragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
-        Map<String, Object> query = new HashMap<>();
-        query.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
-        firebaseClient.getAll(Offer.class, query, result -> {
-            adapter = new OffersAdapter(result, this::openOfferOverview);
-            adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
-        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(OFFER_COLLECTION_NAME)
+                .whereEqualTo(Offer.Fields.offerStatus, OfferStatus.OPEN.toString())
+                .get()
+                .addOnCompleteListener(l -> {
+                            List<Offer> offers = l.getResult().getDocuments().stream()
+                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class))
+                                    .collect(Collectors.toList());
+
+                            Offer[] offersArray = objectMapper.convertValue(offers, Offer[].class);
+
+                            adapter = new OffersAdapter(offersArray, this::openOfferOverview);
+                            adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapter);
+                        }
+                );
 
         return view;
     }

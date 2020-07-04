@@ -21,7 +21,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public CommentAdapter(Comment[] strings) {
         data = strings;
-
     }
 
     @NonNull
@@ -36,7 +35,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         final Comment comment = data[position];
-        holder.userName.setText(comment.getCommentatorName());
+        holder.userName.setText(comment.getAuthor());
         holder.comment.setText(comment.getComment());
     }
 
@@ -45,13 +44,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return data.length;
     }
 
-
-    public class CommentViewHolder extends RecyclerView.ViewHolder {
-
+    class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView userName;
         TextView comment;
 
-        public CommentViewHolder(@NonNull View itemView) {
+        CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.nameAndLastname);
             comment = itemView.findViewById(R.id.comment);

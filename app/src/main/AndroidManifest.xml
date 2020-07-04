@@ -42,6 +42,9 @@
         <provider
             android:name=".provider.ReservationProvider"
             android:authorities="com.example.transportivo.provider.ReservationProvider" />
+        <provider
+            android:name=".provider.CommentsProvider"
+            android:authorities="com.example.transportivo.provider.CommentsProvider" />
     </application>
 
 </manifest>

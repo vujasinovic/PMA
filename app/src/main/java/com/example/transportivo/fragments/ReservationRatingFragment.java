@@ -14,7 +14,6 @@ import com.example.transportivo.model.NotificationToken;
 import com.example.transportivo.model.Offer;
 import com.example.transportivo.model.Reservation;
 import com.example.transportivo.provider.FirebaseClient;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -87,13 +86,12 @@ public class ReservationRatingFragment extends BaseFragment {
         TextInputEditText comment = view.findViewById(R.id.txtComment);
 
         FirebaseClient<Comment> commentFirebaseClient = new FirebaseClient<>();
-        Comment newComment = new Comment(user.getDisplayName(), offer.getOwner(), "Comment:".concat(comment.getText().toString()) + "Rate:".concat(String.valueOf(ratingValue)));
+        Comment newComment = new Comment(user.getDisplayName(), offer.getOwner(), comment.getText().toString(), ratingValue);
         commentFirebaseClient.create(newComment, o -> Log.i("CREATE COMMENT", "Successfully created comment"));
 
         FirebaseClient<Notification> notificationFirebaseClient = new FirebaseClient<>();
-        Notification newNotification = new Notification(offer.getOwner(), "Comment and Rate", user.getDisplayName() + " set comment:".concat(comment.getText().toString()) + " and rate:".concat(String.valueOf(ratingValue)));
+        Notification newNotification = new Notification(offer.getOwner(), "Comment and Rate", user.getDisplayName() + " set comment: ".concat(comment.getText().toString()) + " and rate:".concat(String.valueOf(ratingValue)));
         notificationFirebaseClient.create(newNotification, o -> Log.i("CREATE NOTIFICATION", "Successfully created notification"));
-
 
     }
 }

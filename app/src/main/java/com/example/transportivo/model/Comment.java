@@ -12,8 +12,8 @@ import lombok.experimental.FieldNameConstants;
 @AllArgsConstructor
 @FieldNameConstants
 public class Comment implements Serializable {
-
-    private String commentatorName;
+    private String author;
     private String userId;
     private String comment;
+    private float rating;
 }

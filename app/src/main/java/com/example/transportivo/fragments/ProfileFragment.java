@@ -1,8 +1,6 @@
 package com.example.transportivo.fragments;
 
-import android.text.Editable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,30 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transportivo.R;
 import com.example.transportivo.adapters.CommentAdapter;
-import com.example.transportivo.adapters.NotificationAdapter;
 import com.example.transportivo.model.Comment;
-import com.example.transportivo.model.Notification;
-import com.example.transportivo.provider.FirebaseClient;
-import com.example.transportivo.ui.TransportivoDatePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import lombok.NonNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProfileFragment extends BaseFragment {
 
+    private static final String COMMENTS_COLLECTION_NAME = "comments";
     private FirebaseUser user;
-    private String[] users = {"Dragan Torbica", "Momo", "Dule postar"};
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -58,17 +47,23 @@ public class ProfileFragment extends BaseFragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
-        //retrieve notifications
-        Map<String, Object> query = new HashMap<>();
-        query.put("userId", user.getUid());
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        FirebaseClient<Comment> firebaseClient = new FirebaseClient<>();
-        firebaseClient.getAll(Comment.class, query, result -> {
-            adapter = new CommentAdapter(result);
-            recyclerView.setAdapter(adapter);
-        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(COMMENTS_COLLECTION_NAME)
+                .whereEqualTo(Comment.Fields.userId, user.getUid())
+                .get()
+                .addOnCompleteListener(l -> {
+                            List<Comment> comments = l.getResult().getDocuments().stream()
+                                    .map(d -> objectMapper.convertValue(d.getData(), Comment.class))
+                                    .collect(Collectors.toList());
 
+                            Comment[] commentsArray = objectMapper.convertValue(comments, Comment[].class);
 
+                            adapter = new CommentAdapter(commentsArray);
+                            recyclerView.setAdapter(adapter);
+                        }
+                );
 
         AppCompatButton saveButton = view.findViewById(R.id.saveButton);
         ImageButton editButton = view.findViewById(R.id.editButton);
@@ -84,25 +79,22 @@ public class ProfileFragment extends BaseFragment {
             saveButton.setVisibility(View.GONE);
 
         });
+
         displayUserInfo(view);
 
         return view;
     }
 
-    public void displayUserInfo(View view) {
+    private void displayUserInfo(View view) {
         EditText userName = view.findViewById(R.id.userLastnameAndName);
         EditText userEmail = view.findViewById(R.id.userEmail);
         TextView username = view.findViewById(R.id.usernameText);
         username.setText(user.getDisplayName());
         userName.setText(user.getDisplayName());
         userEmail.setText(user.getEmail());
-
-
     }
 
-
-    public void updateUser(View view) {
-
+    private void updateUser(View view) {
         EditText userName = view.findViewById(R.id.userLastnameAndName);
         EditText userEmail = view.findViewById(R.id.userEmail);
         TextView username = view.findViewById(R.id.usernameText);
