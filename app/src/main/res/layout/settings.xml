@@ -12,9 +12,25 @@
         android:text="Change password"
         android:textSize="20dp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editOldPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter old password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/oldPassword"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editPassword"
@@ -24,23 +40,23 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/newPassword"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/savePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@color/secondary"
             android:text="Save"
             android:textColor="@color/textSecondary" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>
