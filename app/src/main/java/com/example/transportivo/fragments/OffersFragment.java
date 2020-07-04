@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.transportivo.R;
 import com.example.transportivo.adapters.OffersAdapter;
 import com.example.transportivo.model.Offer;
+import com.example.transportivo.model.OfferStatus;
 import com.example.transportivo.provider.FirebaseClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.SneakyThrows;
 
@@ -33,8 +37,11 @@ public class OffersFragment extends BaseFragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
+        Map<String, Object> query = new HashMap<>();
+        query.put(Offer.Fields.offerStatus, OfferStatus.OPEN.toString());
+
         FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
-        firebaseClient.getAll(Offer.class, result -> {
+        firebaseClient.getAll(Offer.class, query, result -> {
             adapter = new OffersAdapter(result, this::openOfferOverview);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
