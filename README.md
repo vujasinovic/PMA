@@ -1,4 +1,7 @@
 # PMA
+
+Demo video: https://www.youtube.com/watch?v=nhHK8zrslHE
+
 Aplikacija Transportivo
 
 Tim 1:
