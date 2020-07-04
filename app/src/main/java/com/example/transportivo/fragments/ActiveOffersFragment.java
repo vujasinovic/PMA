@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,15 +41,22 @@ public class ActiveOffersFragment extends Fragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("offer")
-                .whereEqualTo(Offer.Fields.offerStatus, OfferStatus.IN_PROGRESS.toString())
+                .whereIn(Offer.Fields.offerStatus, Arrays.asList(OfferStatus.IN_PROGRESS.toString(), OfferStatus.RESERVED.toString()))
                 .get()
                 .addOnCompleteListener(l -> {
                             List<Offer> offers = l.getResult().getDocuments().stream()
-                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class))
+                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class).withId(d.getId()))
                                     .collect(Collectors.toList());
 
                             Offer[] offersArray = objectMapper.convertValue(offers, Offer[].class);
@@ -59,7 +67,6 @@ public class ActiveOffersFragment extends Fragment {
                         }
                 );
 
-        return view;
     }
 
     private void openOfferOverview(Offer offer) {

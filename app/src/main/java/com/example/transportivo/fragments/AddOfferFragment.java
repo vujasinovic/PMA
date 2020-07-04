@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 
 import com.example.transportivo.R;
@@ -92,9 +93,14 @@ public class AddOfferFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        System.out.println(grantResults[0]);
+    }
+
     private void startPlacePicker(String currentAddress, int requestCode) {
         Intent intent = new Intent(getContext(), PlacePickerActivity.class);
-        intent.setData(Uri.parse(currentAddress));
+        intent.putExtra("address", currentAddress);
         startActivityForResult(intent, requestCode);
     }
 

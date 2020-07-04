@@ -1,4 +1,4 @@
-package com.example.transportivo.db.offers;
+package com.example.transportivo.db;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,22 +17,9 @@ import static com.example.transportivo.model.Offer.Fields.price;
 import static com.example.transportivo.model.Offer.Fields.rating;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class OffersTableHelper {
-    public static final String TABLE_NAME = "Offers";
-    private static final String TYPE_TEXT = " TEXT, ";
+public final class NotificationTokenTableHelper {
+    public static final String TABLE_NAME = "NotificationTokens";
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
-            "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + locationFrom + TYPE_TEXT
-            + locationTo + TYPE_TEXT
-            + offerStatus + TYPE_TEXT
-            + description + TYPE_TEXT
-            + price + TYPE_TEXT
-            + capacity + TYPE_TEXT
-            + dateTimeArrival + " DATETIME, "
-            + latitude + TYPE_TEXT
-            + longitude + TYPE_TEXT
-            + comment + TYPE_TEXT
-            + rating + TYPE_TEXT
-            + dateTimeDeparture + " DATETIME);";
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, token_id TEXT);";
 }

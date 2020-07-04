@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.transportivo">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:name=".TransportivoApplication"
         android:allowBackup="true"
@@ -13,6 +17,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAdTGCklXqnWZrlFrm991fhY_t7Kx8d9AA" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="channel_id" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -32,19 +39,21 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="channel_id" />
+        <service android:name=".services.LocationSharingService" />
+
+        <receiver android:name=".broadcast.NotificationTokenUploader" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name=".provider.OffersProvider"
             android:authorities="com.example.transportivo.provider.OffersProvider" />
         <provider
-            android:name=".provider.ReservationProvider"
-            android:authorities="com.example.transportivo.provider.ReservationProvider" />
-        <provider
-            android:name=".provider.CommentsProvider"
-            android:authorities="com.example.transportivo.provider.CommentsProvider" />
+            android:name=".provider.NotificationTokenProvider"
+            android:authorities="com.example.transportivo.provider.NotificationTokenProvider" />
     </application>
 
 </manifest>

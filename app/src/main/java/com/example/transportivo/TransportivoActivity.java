@@ -2,12 +2,11 @@ package com.example.transportivo;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,23 +19,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.example.transportivo.model.NotificationToken;
-import com.example.transportivo.provider.FirebaseClient;
+import com.example.transportivo.broadcast.NotificationTokenUploader;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import static androidx.navigation.Navigation.findNavController;
 import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavController;
 import static androidx.navigation.ui.NavigationUI.setupWithNavController;
 
 public class TransportivoActivity extends AppCompatActivity {
+    private final NotificationTokenUploader connectivityStatusReceiver;
+    
     private static final int[] navItems = {
             R.id.nav_home,
             R.id.nav_profile,
@@ -46,16 +43,15 @@ public class TransportivoActivity extends AppCompatActivity {
             R.id.nav_settings,
             R.id.nav_search
     };
-    private static final String TAG_NAME = "TransportivoActivity";
+
+    public TransportivoActivity() {
+        connectivityStatusReceiver = new NotificationTokenUploader();
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences preferences = getSharedPreferences("TOKEN_PREF", Context.MODE_PRIVATE);
-        String retrievedToken = preferences.getString("token", null);
-
-        createOrUpdateToken(retrievedToken);
         setContentView(R.layout.activity_main);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -130,22 +126,20 @@ public class TransportivoActivity extends AppCompatActivity {
         }
     }
 
-
-    private void createOrUpdateToken(String token) {
-
-        NotificationToken notificationToken = new NotificationToken();
-        notificationToken.setToken_id(token);
-        FirebaseClient<NotificationToken> firebaseClient = new FirebaseClient<>();
-        Map<String, Object> query = new HashMap<>();
-        query.put("owner", FirebaseAuth.getInstance().getUid());
-        firebaseClient.getAll(NotificationToken.class, query, result -> {
-            if (result.length > 0) {
-                result[0].setToken_id(FirebaseInstanceId.getInstance().getToken());
-                firebaseClient.update(result[0], o -> Log.i(TAG_NAME, "Successfully updated token"));
-            } else {
-                firebaseClient.create(notificationToken, o -> Log.i(TAG_NAME, "Successfully added TOKEN"));
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectivityStatusReceiver, intentFilter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (connectivityStatusReceiver != null) {
+            unregisterReceiver(connectivityStatusReceiver);
+        }
+    }
 }

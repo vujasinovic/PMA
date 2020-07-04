@@ -12,7 +12,6 @@ import com.example.transportivo.model.Comment;
 import com.example.transportivo.model.Notification;
 import com.example.transportivo.model.NotificationToken;
 import com.example.transportivo.model.Offer;
-import com.example.transportivo.model.Reservation;
 import com.example.transportivo.provider.FirebaseClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,35 +32,27 @@ public class ReservationRatingFragment extends BaseFragment {
 
     @Override
     protected View initializeView(View view) {
-        final OfferOverviewFragmentArgs args = OfferOverviewFragmentArgs.fromBundle(getArguments());
+        final ReservationRatingFragmentArgs args = ReservationRatingFragmentArgs.fromBundle(getArguments());
         final Offer offer = args.getOffer();
 
-        Map<String, Object> query = new HashMap<>();
-        query.put("offerId", offer.getId());
+        final AppCompatButton rateButton = view.findViewById(R.id.btnRateAndComplete);
+        final TextInputEditText comment = view.findViewById(R.id.txtComment);
+        final RatingBar rating = view.findViewById(R.id.ratingBar);
 
-        AppCompatButton rateButton = view.findViewById(R.id.btnRateAndComplete);
-        TextInputEditText comment = view.findViewById(R.id.txtComment);
-        RatingBar rating = view.findViewById(R.id.ratingBar);
+        rateButton.setOnClickListener(v -> {
+            String commentValue = comment.getText().toString();
+            float ratingValue = rating.getRating();
 
-        FirebaseClient<Reservation> firebaseClient = new FirebaseClient<>();
-        firebaseClient.getAll(Reservation.class, query, res -> {
-            rateButton.setOnClickListener(l -> {
-                Reservation reservation = res[0];
-                String commentValue = comment.getText().toString();
-                float ratingValue = rating.getRating();
+            offer.setComment(commentValue);
+            offer.setRating(ratingValue);
 
-                reservation.setComment(commentValue);
-                reservation.setRating(ratingValue);
-
-                firebaseClient.update(reservation, result -> {
-                    Log.i("ReservationRatingFr", "Reservation updated. Rating: " + result.getRating() + ", Comment: " + result.getComment());
-                    Navigation.findNavController(getView()).navigate(R.id.nav_home);
-                });
-                getNotification(view, offer, ratingValue);
+            FirebaseClient<Offer> firebaseClient = new FirebaseClient<>();
+            firebaseClient.update(offer, result -> {
+                Log.i("ReservationRatingFr", "Reservation updated. Rating: " + result.getRating() + ", Comment: " + result.getComment());
+                Navigation.findNavController(getView()).navigate(R.id.nav_home);
             });
-
+            getNotification(view, offer, ratingValue);
         });
-
 
         return view;
     }
@@ -73,14 +64,12 @@ public class ReservationRatingFragment extends BaseFragment {
         query.put("owner", offer.getOwner());
         tokenFirebaseClient.getAll(NotificationToken.class, query, res -> {
             Map<String, Object> data = new HashMap<>();
-            data.put("title", "Comment and Rating");
+            data.put("title", "You have new rating");
             data.put("userToken", res[0].getToken_id());
-            data.put("body", "User" + user.getDisplayName() + "set comment and rate for you");
+            data.put("body", "User " + user.getDisplayName() + " has rated offer (" + offer.getRating() + ").\r\n" + offer.getComment());
             data.put("push", true);
             FirebaseFunctions functions = FirebaseFunctions.getInstance();
             functions.getHttpsCallable("sendNotification").call(data);
-
-
         });
 
         TextInputEditText comment = view.findViewById(R.id.txtComment);
@@ -92,6 +81,6 @@ public class ReservationRatingFragment extends BaseFragment {
         FirebaseClient<Notification> notificationFirebaseClient = new FirebaseClient<>();
         Notification newNotification = new Notification(offer.getOwner(), "Comment and Rate", user.getDisplayName() + " set comment: ".concat(comment.getText().toString()) + " and rate:".concat(String.valueOf(ratingValue)));
         notificationFirebaseClient.create(newNotification, o -> Log.i("CREATE NOTIFICATION", "Successfully created notification"));
-
     }
+
 }

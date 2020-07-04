@@ -41,6 +41,13 @@ public class OffersHistoryFragment extends Fragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<OfferStatus> offerStatuses = Arrays.asList(OfferStatus.CANCELED, OfferStatus.COMPLETED);
 
@@ -50,7 +57,7 @@ public class OffersHistoryFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(l -> {
                             List<Offer> offers = l.getResult().getDocuments().stream()
-                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class))
+                                    .map(d -> objectMapper.convertValue(d.getData(), Offer.class).withId(d.getId()))
                                     .collect(Collectors.toList());
 
                             Offer[] offersArray = objectMapper.convertValue(offers, Offer[].class);
@@ -60,8 +67,6 @@ public class OffersHistoryFragment extends Fragment {
                             recyclerView.setAdapter(adapter);
                         }
                 );
-
-        return view;
     }
 
     private void openOfferOverview(Offer offer) {
