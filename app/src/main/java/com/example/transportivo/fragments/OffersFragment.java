@@ -40,13 +40,6 @@ public class OffersFragment extends BaseFragment {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecor);
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -65,6 +58,8 @@ public class OffersFragment extends BaseFragment {
                             recyclerView.setAdapter(adapter);
                         }
                 );
+
+        return view;
     }
 
     private void openOfferOverview(Offer offer) {

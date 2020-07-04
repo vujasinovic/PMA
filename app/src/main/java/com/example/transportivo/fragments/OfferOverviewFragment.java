@@ -129,20 +129,13 @@ public class OfferOverviewFragment extends BaseFragment {
     }
 
     private void setupAmountAndPrice(Offer offer) {
-        final boolean accepted = isOfferAccepted(offer);
-        final View container = getView().findViewById(R.id.amountAndPrice);
         final TextView capacity = getView().findViewById(R.id.reserverdAmount);
         final TextView price = getView().findViewById(R.id.price);
 
-        container.setVisibility(accepted ? View.VISIBLE : View.GONE);
-        price.setText("Price: " + offer.getPrice());
+        price.setText("Price: " + offer.getPrice() + "$");
         capacity.setText("Capacity: " + offer.getCapacity() + "T");
 
         offerFirebaseClient.update(offer, res -> Log.i(TAG, "Successfully updated offer " + offer.getId()));
-    }
-
-    private boolean isOfferAccepted(Offer offer) {
-        return offer.getOfferStatus().equals(OfferStatus.IN_PROGRESS);
     }
 
     private void setupDescription(Offer offer) {
@@ -221,7 +214,7 @@ public class OfferOverviewFragment extends BaseFragment {
             }
             notify(offer.getClient(), "Delivery started", "Your order is in progress (" + offer.getLocationFrom() + " -> " + offer.getLocationTo() + ")");
 
-            getActivity().onBackPressed();
+            Navigation.findNavController(getView()).navigate(R.id.nav_home);
         });
     }
 
@@ -254,7 +247,7 @@ public class OfferOverviewFragment extends BaseFragment {
             notify(offer.getClient(), "Reservation completed", "Your reservation (" +
                     offer.getLocationFrom() + " -> " + offer.getLocationTo() + ") has been completed!");
             stopLocationSharing();
-            getActivity().onBackPressed();
+            Navigation.findNavController(getView()).navigate(R.id.nav_home);
         });
     }
 
@@ -275,7 +268,7 @@ public class OfferOverviewFragment extends BaseFragment {
             Log.i(TAG, "Offer updated " + offer.getId() + " [" + status.name() + "]");
             notify(userToNotify, title, "User " + currentUserName +
                     " has canceled offer (" + offer.getLocationFrom() + " -> " + offer.getLocationTo() + ")");
-            getActivity().onBackPressed();
+            Navigation.findNavController(getView()).navigate(R.id.nav_home);
         });
 
         return true;
